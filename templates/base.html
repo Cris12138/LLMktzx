@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>首页 -</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+    <meta name="keywords" content="首页">
+    <meta name="description" content="首页">
+    <meta name="author" content="yinqi">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="/static/css/style.min.css" rel="stylesheet">
+
+    <style>
+    /* 优化布局样式 */
+    html, body {
+        height: 100%;
+        overflow: hidden; /* 禁用默认滚动 */
+    }
+
+    .lyear-layout-web {
+        height: 100%;
+        position: relative;
+    }
+
+    .lyear-layout-header {
+        height: 50px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: #fff;
+        border-bottom: 1px solid #eee;
+    }
+
+    .lyear-layout-sidebar {
+        top: 50px !important;
+        height: calc(100% - 50px) !important;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+    }
+
+    .lyear-layout-container {
+        margin-top: 50px;
+        height: calc(100vh - 50px);
+        overflow-y: auto !important; /* 强制启用滚动 */
+        position: relative;
+        padding: 20px;
+    }
+
+    /* 导航交互效果 */
+    .nav-item a {
+        display: inline-block;
+        padding: 8px 15px;
+        transition: all 0.2s ease;
+        border-radius: 4px;
+        position: relative;
+        color: #666;
+    }
+
+    .nav-item a:active:not(.active) {
+        transform: scale(0.96);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-item a.active {
+        box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.15);
+        background-color: #f8f9fa;
+        color: #2196F3;
+    }
+
+    .nav-item a:not(.active) i {
+        transition: transform 0.2s ease;
+    }
+    .nav-item a:active:not(.active) i {
+        transform: rotate(15deg);
+    }
+
+    /* 聊天容器优化 */
+    .chat-container {
+        max-height: none !important;
+        min-height: calc(100vh - 200px);
+    }
+        .lyear-layout-sidebar-scroll {
+    height: 100%;
+    position: relative; /* 新增 */
+    padding-bottom: 100px; /* 新增 */
+}
+
+    .sidebar-footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 15px;
+        background: inherit;
+        z-index: 10;
+        border-top: 1px solid rgba(0,0,0,0.05); /* 可选的分隔线 */
+    }
+
+    .copyright {
+        font-size: 12px;
+        line-height: 1.5;
+        color: #666;
+    }
+    </style>
+</head>
+
+<body>
+<div class="lyear-layout-web">
+    <div class="lyear-layout-container">
+        <!-- 左侧导航 -->
+        <aside class="lyear-layout-sidebar">
+            <div class="lyear-layout-sidebar-scroll">
+                <nav class="sidebar-main">
+                    <ul class="nav nav-drawer">
+{#                        <li class="nav-item">#}
+{#                            <a href="/" class="active"><i class="mdi mdi-palette"></i> 图谱查询展示</a>#}
+{#                        </li>#}
+                        <li class="nav-item">
+                            <a href="/wenda"><i class="mdi mdi-format-align-justify"></i> 医疗智能问答</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/health-assessment"><i class="mdi mdi-heart-pulse"></i> 个人健康状态测评</a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="sidebar-footer">
+                    <p class="copyright text-center text-muted small">Copyright &copy; 2025 医疗知识中枢<br>All rights reserved.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 头部 -->
+        <header class="lyear-layout-header">
+            <nav class="navbar navbar-default">
+                <div class="topbar">
+                    <div class="lyear-aside-toggler">
+                        <span class="lyear-toggler-bar"></span>
+                        <span class="lyear-toggler-bar"></span>
+                        <span class="lyear-toggler-bar"></span>
+                    </div>
+                    <span class="navbar-page-title">KG-LM Synergy</span>
+                    <ul class="topbar-right">
+                        <li class="dropdown dropdown-profile">
+                            <a href="/accounts/logout">
+                                <span>退出</span>
+                            </a>
+                        </li>
+                        <li class="dropdown dropdown-profile">
+                            <a href="javascript:void(0)">
+                                <span>{{ request.user }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <!-- 页面主要内容 -->
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="/static/js/main.min.js"></script>
+<script type="text/javascript" src="/static/js/Chart.js"></script>
+
+<script>
+// 自动滚动功能
+function initAutoScroll() {
+    // 优先选择聊天容器，其次使用布局容器
+    const container = document.querySelector('.chat-container') ||
+                     document.querySelector('.lyear-layout-container');
+
+    if (!container) return;
+
+    // 滚动到底部
+    const scrollToBottom = () => {
+        container.scrollTo({
+            top: container.scrollHeight,
+            behavior: 'smooth'
+        });
+    };
+
+    // 初始滚动
+    scrollToBottom();
+
+    // 监听内容变化
+    const observer = new MutationObserver(scrollToBottom);
+    observer.observe(container, {
+        childList: true,
+        subtree: true,
+        characterData: true
+    });
+
+    // 窗口尺寸变化时重新滚动
+    window.addEventListener('resize', scrollToBottom);
+}
+
+// 多重触发保障
+document.addEventListener('DOMContentLoaded', initAutoScroll);
+window.addEventListener('load', initAutoScroll);
+setTimeout(initAutoScroll, 500);
+
+// 导航激活逻辑
+document.addEventListener('DOMContentLoaded', function() {
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.nav-item a');
+
+    navLinks.forEach(link => {
+        const isActive = link.getAttribute('href') === currentPath;
+        link.classList.toggle('active', isActive);
+
+        link.addEventListener('click', function(e) {
+            navLinks.forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+});
+</script>
+
+{% if msg %}
+<script>
+    alert("{{ msg }}")
+</script>
+{% endif %}
+</body>
+</html>

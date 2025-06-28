@@ -1,0 +1,97 @@
+/* 公共样式 */
+.lyear-login-box {
+    position: relative;
+    overflow-x: hidden;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+
+.lyear-login-left {
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    min-width: 480px;
+}
+
+.lyear-overlay {
+    background: linear-gradient(135deg, rgba(24, 92, 175, 0.9) 0%, rgba(67, 153, 231, 0.8) 100%);
+}
+
+.lyear-featured {
+    padding: 40px;
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.lyear-login-right {
+    flex: 1;
+    max-width: 560px;
+    padding: 80px 5%;
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.form-control {
+    height: 50px;
+    border-radius: 8px;
+    padding-left: 45px;
+    transition: all 0.3s;
+    border: 2px solid #e9ecef;
+}
+
+.form-control:focus {
+    border-color: #1890ff;
+    box-shadow: 0 0 8px rgba(24, 144, 255, 0.2);
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+    z-index: 2;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #1890ff 0%, #0056b3 100%);
+    border: none;
+    height: 50px;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(24, 144, 255, 0.3);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .lyear-login-box {
+        flex-direction: column;
+    }
+
+    .lyear-login-left {
+        min-width: auto;
+        height: 200px;
+    }
+
+    .lyear-login-right {
+        max-width: 100%;
+        padding: 40px 5%;
+    }
+}
