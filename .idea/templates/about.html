@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>关于我们</h4>
+                </div>
+                <div class="card-body">
+                    <div class="about-section">
+                        <h2 class="mb-4">ZZU康途智选医疗推荐知识中枢</h2>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h4><i class="mdi mdi-lightbulb-on-outline"></i> 我们的使命</h4>
+                                <p>致力于通过人工智能技术，为患者和医疗工作者提供准确、及时的医疗信息和建议，改善医疗决策过程。</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h4><i class="mdi mdi-target"></i> 我们的愿景</h4>
+                                <p>成为国内领先的医疗知识服务平台，通过技术创新推动医疗健康领域的智能化发展。</p>
+                            </div>
+                        </div>
+                        
+                        <h3 class="mt-5 mb-3">团队介绍</h3>
+                        <div class="row">
+                            <div class="col-md-4 mb-4">
+                                <div class="team-card text-center p-3">
+                                    <div class="avatar mb-3">
+                                        <i class="mdi mdi-account-circle mdi-48px"></i>
+                                    </div>
+                                    <h5>ZZU-CAI-12团队</h5>
+                                    <p class="text-muted">核心开发团队</p>
+                                    <p>由郑州大学计算机与人工智能学院的优秀学生组成，专注于医疗知识图谱和推荐系统的研究与应用。</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="team-card text-center p-3">
+                                    <div class="avatar mb-3">
+                                        <i class="mdi mdi-school mdi-48px"></i>
+                                    </div>
+                                    <h5>学术支持</h5>
+                                    <p class="text-muted">郑州大学</p>
+                                    <p>依托郑州大学强大的学术资源和医疗合作网络，确保系统内容的专业性和可靠性。</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="team-card text-center p-3">
+                                    <div class="avatar mb-3">
+                                        <i class="mdi mdi-hospital-building mdi-48px"></i>
+                                    </div>
+                                    <h5>医疗合作</h5>
+                                    <p class="text-muted">合作医疗机构</p>
+                                    <p>与多家三甲医院合作，由专业医生团队提供内容审核和医学指导。</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="mt-5 mb-3">联系我们</h3>
+                        <div class="contact-info">
+                            <p><i class="mdi mdi-email"></i> 邮箱：contact@zzu-medical.com</p>
+                            <p><i class="mdi mdi-phone"></i> 电话：0371-12345678</p>
+                            <p><i class="mdi mdi-map-marker"></i> 地址：河南省郑州市科学大道100号郑州大学</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.about-section {
+    padding: 20px;
+}
+.team-card {
+    background: #f9f9f9;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.team-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.contact-info i {
+    margin-right: 10px;
+    color: #2196F3;
+}
+</style>
+{% endblock %}

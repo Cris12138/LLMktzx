@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="lyear-layout-content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4><i class="mdi mdi-format-list-bulleted"></i> {{ user.username }} 的发帖</h4>
+            </div>
+            <div class="card-body">
+                {% if posts %}
+                <div class="list-group">
+                    {% for post in posts %}
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="flex-grow-1">
+                                <h5><a href="{% url 'myneo4j:post_detail' post.id %}" class="text-primary">{{ post.title }}</a></h5>
+                                <small class="text-muted">{{ post.created_at|date:"Y-m-d H:i" }}</small>
+                                <p>{{ post.content|truncatechars:100 }}</p>
+                            </div>
+                            <div class="btn-group">
+                                <a href="{% url 'myneo4j:edit_post' post.id %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="mdi mdi-pencil"></i> 修改
+                                </a>
+                                <button class="btn btn-sm btn-outline-danger delete-post" data-post-id="{{ post.id }}">
+                                    <i class="mdi mdi-delete"></i> 删除
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="alert alert-info">暂无发帖记录</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- 删除确认模态框 -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">确认删除</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>确定要删除这篇帖子吗？删除后无法恢复。</p>
+            </div>
+            <div class="modal-footer">
+                <form id="deleteForm" method="post" action="">
+                    {% csrf_token %}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-danger">确认删除</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// 确保在 jQuery 加载完成后执行
+document.addEventListener('DOMContentLoaded', function() {
+    // 使用完全限定的 jQuery 代替 $
+    jQuery(document).ready(function($) {
+        // 删除按钮点击事件
+        jQuery('.delete-post').on('click', function(e) {
+            try {
+                var postId = jQuery(this).data('post-id');
+                console.log('Deleting post ID:', postId);
+                var deleteUrl = '{% url "myneo4j:delete_post" 0 %}'.replace('0', postId);
+                console.log('Delete URL:', deleteUrl);
+                jQuery('#deleteForm').attr('action', deleteUrl);
+                jQuery('#deleteModal').modal('show');
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

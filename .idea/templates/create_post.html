@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="lyear-layout-content">
+    <div class="container-fluid">
+        <!-- 头部标题 -->
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0"><i class="fas fa-edit"></i> 发布新帖子</h4>
+        </div>
+
+        <!-- 发帖表单 -->
+        <div class="card shadow-sm mt-4">
+            <div class="card-body">
+                <form method="post" action="{% url 'myneo4j:create_post' %}">
+                    {% csrf_token %}
+
+                    <!-- 标题输入 -->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="postTitle"
+                               name="title" placeholder="请输入标题" required>
+                        <label for="postTitle">帖子标题</label>
+                    </div>
+
+                    <!-- 内容输入 -->
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" name="content"
+                                  style="height: 200px" placeholder="请输入内容" required></textarea>
+                        <label>帖子内容</label>
+                    </div>
+
+                    <!-- 操作按钮 -->
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'myneo4j:forum' %}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>返回论坛
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane me-2"></i>发布帖子
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* 自定义样式 */
+        .form-control:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
+        }
+    </style>
+</main>
+{% endblock %}

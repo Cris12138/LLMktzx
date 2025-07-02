@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>康途智选 - 用户登录</title>
+    <link rel="icon" href="/static/images/logo-ico.png" type="image/x-icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background:
+                linear-gradient(135deg, rgba(245, 247, 250, 0.7) 0%, rgba(228, 232, 240, 0.7) 100%),
+                url('/static/images/img_1.png') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 高科技背景元素 */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(66, 133, 244, 0.05) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(52, 168, 83, 0.05) 0%, transparent 30%);
+            z-index: -1;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 480px;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 16px;
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.08),
+                0 0 0 1px rgba(0, 0, 0, 0.03);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .login-container:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.12),
+                0 0 0 1px rgba(0, 0, 0, 0.05);
+        }
+
+        .login-header {
+            padding: 40px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #4285F4 0%, #34A853 100%);
+            color: white;
+            position: relative;
+        }
+
+        .logo-circle {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-circle img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .login-header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .login-header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .login-body {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 15px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4285F4;
+            font-size: 18px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 20px 14px 50px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: #f9f9f9;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: #4285F4;
+            box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+            background: white;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #777;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .password-toggle:hover {
+            color: #4285F4;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            font-size: 17px;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, #4285F4 0%, #34A853 100%);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(66, 133, 244, 0.3);
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(66, 133, 244, 0.4);
+        }
+
+        .btn-login:active {
+            transform: translateY(1px);
+        }
+
+        .login-footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 15px;
+            color: #666;
+        }
+
+        .login-footer a {
+            color: #4285F4;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* 验证码样式 */
+        .captcha-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .captcha-input {
+            flex: 1;
+            margin-right: 15px;
+        }
+
+        .captcha-image {
+            height: 50px;
+            width: 120px;
+            background-color: rgba(66, 133, 244, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 2px solid #e0e0e0;
+        }
+
+        .captcha-image span {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            color: #4285F4;
+        }
+
+        .refresh-captcha {
+            margin-left: 10px;
+            color: #777;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .refresh-captcha:hover {
+            color: #4285F4;
+            transform: rotate(90deg);
+        }
+
+        /* 错误提示 */
+        .is-invalid {
+            border-color: #EA4335 !important;
+            box-shadow: 0 0 0 3px rgba(234, 67, 53, 0.1) !important;
+        }
+
+        .invalid-feedback {
+            display: block;
+            color: #EA4335;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 576px) {
+            .login-body {
+                padding: 30px 20px;
+            }
+
+            .login-header {
+                padding: 30px 0;
+            }
+
+            .form-control {
+                padding: 12px 15px 12px 45px;
+            }
+
+            .input-with-icon i {
+                font-size: 16px;
+                left: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="logo-circle">
+                <img src="/static/images/img.png" alt="康途智选">
+            </div>
+            <h1>欢迎登录</h1>
+            <p>PhaRM-Sync 智能药品推荐系统</p>
+        </div>
+
+        <div class="login-body">
+            <form id="loginForm" method="post" action="/accounts/login">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" name="username" class="form-control" placeholder="请输入用户名" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="请输入密码" required>
+                        <button type="button" class="password-toggle" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="captcha">验证码</label>
+                    <div class="captcha-container">
+                        <input type="text" id="captcha" class="form-control captcha-input" placeholder="请输入验证码" required>
+                        <div class="captcha-image" id="captchaImage">
+                            <span id="captchaText">A7B9</span>
+                        </div>
+                        <span class="refresh-captcha" id="refreshCaptcha">↻</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i> 立即登录
+                </button>
+
+                <div class="login-footer">
+                    没有账号？<a href="/accounts/register">立即注册</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 密码显示/隐藏切换
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            if (togglePassword && passwordInput) {
+                togglePassword.addEventListener('click', function() {
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    const icon = this.querySelector('i');
+                    icon.classList.toggle('fa-eye');
+                    icon.classList.toggle('fa-eye-slash');
+                });
+            }
+            // 验证码功能
+            function generateCaptcha() {
+                const chars = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+                let captcha = "";
+                for (let i = 0; i < 4; i++) {
+                    captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return captcha;
+            }
+            let currentCaptcha = generateCaptcha();
+            document.getElementById('captchaText').textContent = currentCaptcha;
+            // 刷新验证码
+            document.getElementById('refreshCaptcha').addEventListener('click', function() {
+                refreshCaptcha();
+            });
+            // 点击验证码图片刷新
+            document.getElementById('captchaImage').addEventListener('click', function() {
+                refreshCaptcha();
+            });
+            // 刷新验证码的通用函数
+            function refreshCaptcha() {
+                currentCaptcha = generateCaptcha();
+                document.getElementById('captchaText').textContent = currentCaptcha;
+                document.getElementById('captcha').value = '';
+                document.getElementById('refreshCaptcha').style.transform = 'rotate(360deg)';
+                setTimeout(() => {
+                    document.getElementById('refreshCaptcha').style.transform = 'rotate(0deg)';
+                }, 300);
+            }
+            // 重置登录按钮状态
+            function resetLoginButton() {
+                const submitBtn = document.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> 立即登录';
+                    submitBtn.disabled = false;
+                }
+            }
+            // 表单验证
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                const captchaInput = document.getElementById('captcha');
+                const userInput = captchaInput.value.trim().toUpperCase();
+                // 移除之前的错误提示
+                const existingError = captchaInput.nextElementSibling;
+                if (existingError && existingError.classList.contains('invalid-feedback')) {
+                    existingError.remove();
+                }
+                // 验证码验证
+                if (userInput !== currentCaptcha) {
+                    e.preventDefault();
+                    // 显示错误提示
+                    captchaInput.classList.add('is-invalid');
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'invalid-feedback';
+                    errorDiv.textContent = '验证码错误，请重新输入';
+                    captchaInput.parentNode.appendChild(errorDiv);
+                    // 刷新验证码
+                    refreshCaptcha();
+                    // 抖动效果
+                    captchaInput.style.animation = 'shake 0.5s';
+                    setTimeout(() => {
+                        captchaInput.style.animation = '';
+                    }, 500);
+                    // 重置登录按钮状态
+                    resetLoginButton();
+                    return;
+                }
+                // 提交按钮状态
+                const submitBtn = this.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 登录中...';
+                    submitBtn.disabled = true;
+                }
+            });
+            // 输入验证码时移除错误状态
+            document.getElementById('captcha').addEventListener('input', function() {
+                this.classList.remove('is-invalid');
+                const errorDiv = this.nextElementSibling;
+                if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                    errorDiv.remove();
+                }
+            });
+            // 错误消息提示
+            {% if errorinfo %}
+            const errorMsg = "{{ errorinfo }}";
+            const notification = document.createElement('div');
+            notification.innerHTML = `
+                <div style="position: fixed; top: 20px; right: 20px;
+                            background: rgba(234, 67, 53, 0.9); color: white;
+                            padding: 15px 25px; border-radius: 8px;
+                            box-shadow: 0 4px 12px rgba(234, 67, 53, 0.3);
+                            z-index: 9999; display: flex; align-items: center;">
+                    <i class="fas fa-exclamation-circle" style="margin-right: 10px;"></i>
+                    <span>${errorMsg}</span>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => {
+                    notification.remove();
+                }, 500);
+            }, 5000);
+            {% endif %}
+        });
+    </script>
+</body>
+</html>

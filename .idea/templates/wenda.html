@@ -1,0 +1,548 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="lyear-layout-content medical-qa-container">
+    <!-- Header Section -->
+    <div class="qa-header">
+        <h4><i class="fas fa-comment-medical pulse-icon"></i> 医疗问答智能助手</h4>
+    </div>
+
+    <!-- Chat History Section -->
+    <div class="chat-history">
+        <div id="chatContainer" class="conversation-wrapper">
+            {% for wen in all_wendas %}
+                <!-- User Question -->
+                <div class="message-group user-message">
+                    <div class="message-content">
+                        <div class="message-header">
+                            <div class="user-label"><i class="fas fa-user-circle"></i> 用户提问</div>
+                            <div class="timestamp">{{ wen.create_time|date:"Y-m-d H:i" }}</div>
+                        </div>
+                        <div class="message-body user-bubble">
+                            {{ wen.question }}
+                        </div>
+                    </div>
+                    <div class="avatar user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                </div>
+
+                <!-- AI Response -->
+                <div class="message-group ai-message">
+                    <div class="avatar ai-avatar">
+                             <img src="{% static 'images/img.png' %}" alt="智选助手">
+                    </div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <div class="timestamp">{{ wen.update_time|date:"Y-m-d H:i" }}</div>
+                            <div class="ai-label"><i class="fas fa-shield-alt"></i> 智选助手</div>
+                        </div>
+                        <div class="message-body ai-bubble">
+                            {{ wen.anster|safe }}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <p>开始您的医疗咨询，我将为您提供专业解答</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Input Section -->
+    <div class="input-section">
+        <form action="/wenda" method="get" id="qa-form">
+            <div class="input-container">
+                <textarea
+                    name="key"
+                    id="questionInput"
+                    placeholder="请输入您的医疗问题 (按Shift+Enter换行，Enter发送)"
+                    onkeydown="if(event.keyCode === 13 && !event.shiftKey) { document.getElementById('qa-form').submit(); return false; }"
+                ></textarea>
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="btn voice-btn" id="voiceBtn">
+                    <i class="fas fa-microphone"></i>
+                    <span>语音输入</span>
+                </button>
+                <button class="btn send-btn" type="submit">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>获取专业解答</span>
+                </button>
+                <a href="/wenda?clean=1" class="btn clear-btn">
+                    <i class="fas fa-trash-alt"></i>
+                    <span>清除记录</span>
+                </a>
+            </div>
+
+            <div id="recordingStatus" class="recording-status">
+                <i class="fas fa-circle recording-icon"></i>
+                <span>正在录音，点击麦克风按钮停止...</span>
+            </div>
+        </form>
+    </div>
+</main>
+
+<style>
+/* Core layout styles */
+.medical-qa-container {
+    height: calc(100vh - 50px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: #f9fafb;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+/* Header styling */
+.qa-header {
+    background: linear-gradient(135deg, #4a6bdf, #2196f3);
+    color: white;
+    padding: 16px 20px;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 10;
+    flex-shrink: 0;
+}
+
+.qa-header h4 {
+    margin: 0;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.pulse-icon {
+    margin-right: 10px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+/* Chat history section styling */
+.chat-history {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f9fafb;
+}
+
+.chat-history::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-history::-webkit-scrollbar-track {
+    background: #f9fafb;
+}
+
+.chat-history::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 10px;
+}
+
+.conversation-wrapper {
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+/* Message styling */
+.message-group {
+    display: flex;
+    margin-bottom: 22px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.user-message {
+    flex-direction: row-reverse;
+}
+
+.ai-message {
+    flex-direction: row;
+}
+
+.message-content {
+    max-width: 65%;
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 13px;
+}
+
+.user-message .message-header {
+    flex-direction: row-reverse;
+}
+
+.user-label {
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.ai-label {
+    color: #2563eb;
+    font-weight: 500;
+}
+
+.timestamp {
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+.message-body {
+    padding: 12px 16px;
+    border-radius: 18px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    line-height: 1.5;
+}
+
+.user-bubble {
+    background-color: #f0f4ff;
+    border-top-right-radius: 4px;
+    color: #1e40af;
+    border-right: 3px solid #3b82f6;
+}
+
+.ai-bubble {
+    background-color: white;
+    border-top-left-radius: 4px;
+    color: #1f2937;
+    border-left: 3px solid #2563eb;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.user-avatar {
+    color: #6b7280;
+    font-size: 24px;
+}
+
+.ai-avatar {
+    color: #255625eb;
+    font-size: 20px;
+    background-color: #e0e2ff;
+}
+
+/* Empty state styling */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #9ca3af;
+    text-align: center;
+    padding: 40px 0;
+}
+
+.empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    color: #d1d5db;
+}
+
+/* Input section styling */
+.input-section {
+    background-color: white;
+    border-top: 1px solid #e5e7eb;
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.03);
+    padding: 16px;
+    z-index: 5;
+}
+
+.input-container {
+    margin-bottom: 12px;
+}
+
+textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    resize: none;
+    font-family: inherit;
+    font-size: 15px;
+    transition: border-color 0.2s;
+}
+
+textarea:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.btn {
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn i {
+    margin-right: 8px;
+}
+
+.voice-btn {
+    background-color: #f3f4f6;
+    color: #4b5563;
+}
+
+.voice-btn:hover {
+    background-color: #e5e7eb;
+}
+
+.send-btn {
+    background-color: #2563eb;
+    color: white;
+}
+
+.send-btn:hover {
+    background-color: #1d4ed8;
+}
+
+.clear-btn {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    text-decoration: none;
+}
+
+.clear-btn:hover {
+    background-color: #fecaca;
+}
+
+/* Recording status */
+.recording-status {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    margin-top: 12px;
+    color: #ef4444;
+    font-size: 14px;
+}
+
+.recording-icon {
+    margin-right: 8px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { opacity: 0.2; }
+}
+
+/* Voice button when recording */
+.recording {
+    background-color: #fee2e2 !important;
+    color: #dc2626 !important;
+    animation: pulse-red 1.5s infinite;
+}
+
+@keyframes pulse-red {
+    0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .message-content {
+        max-width: 80%;
+    }
+
+    .button-group {
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        min-width: 100px;
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .message-content {
+        max-width: 90%;
+    }
+
+    .avatar {
+        width: 30px;
+        height: 30px;
+        margin: 0 5px;
+    }
+
+    .button-group {
+        justify-content: space-between;
+    }
+
+    .btn {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .btn span {
+        display: none;
+    }
+
+    .btn i {
+        margin-right: 0;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Voice recognition functionality
+    const voiceBtn = document.getElementById('voiceBtn');
+    const questionInput = document.getElementById('questionInput');
+    const recordingStatus = document.getElementById('recordingStatus');
+    let recognition;
+    let isRecording = false;
+
+    // Check browser support for speech recognition
+    if ('webkitSpeechRecognition' in window) {
+        recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = true;
+        recognition.lang = 'zh-CN';
+
+        recognition.onresult = function(event) {
+            const transcript = Array.from(event.results)
+                .map(result => result[0])
+                .map(result => result.transcript)
+                .join('');
+            questionInput.value = transcript;
+        };
+
+        recognition.onerror = function(event) {
+            console.error('语音识别错误:', event.error);
+            stopRecording();
+            showNotification('语音识别错误: ' + event.error, 'error');
+        };
+
+        recognition.onend = function() {
+            if (isRecording) {
+                // Restart if still recording but recognition ended
+                recognition.start();
+            }
+        };
+    } else {
+        voiceBtn.disabled = true;
+        voiceBtn.title = '您的浏览器不支持语音识别';
+        console.warn('该浏览器不支持语音识别API');
+    }
+
+    // Start/stop recording
+    voiceBtn.addEventListener('click', function() {
+        if (!recognition) {
+            showNotification('您的浏览器不支持语音识别功能，请使用Chrome等现代浏览器', 'error');
+            return;
+        }
+
+        if (!isRecording) {
+            startRecording();
+        } else {
+            stopRecording();
+        }
+    });
+
+    function startRecording() {
+        try {
+            recognition.start();
+            isRecording = true;
+            voiceBtn.classList.add('recording');
+            voiceBtn.innerHTML = '<i class="fas fa-microphone-slash"></i><span>停止录音</span>';
+            recordingStatus.style.display = 'flex';
+        } catch (err) {
+            console.error('录音启动失败:', err);
+            showNotification('无法启动录音，请确保麦克风权限已开启', 'error');
+        }
+    }
+
+    function stopRecording() {
+        recognition.stop();
+        isRecording = false;
+        voiceBtn.classList.remove('recording');
+        voiceBtn.innerHTML = '<i class="fas fa-microphone"></i><span>语音输入</span>';
+        recordingStatus.style.display = 'none';
+    }
+
+    // Notification system
+    function showNotification(message, type = 'info') {
+        // You can implement a more sophisticated notification system here
+        alert(message);
+    }
+
+    // Auto-scroll functionality
+    function scrollToBottom() {
+        const chatSection = document.querySelector('.chat-history');
+        if (chatSection) {
+            chatSection.scrollTop = chatSection.scrollHeight;
+        }
+    }
+
+    // Initial scroll
+    scrollToBottom();
+    window.addEventListener('load', scrollToBottom);
+
+    // Form submission
+    document.getElementById('qa-form')?.addEventListener('submit', function() {
+        setTimeout(scrollToBottom, 100);
+    });
+
+    // Observe container changes for auto-scrolling
+    const observer = new MutationObserver(function() {
+        scrollToBottom();
+    });
+
+    const chatContainer = document.getElementById('chatContainer');
+    if (chatContainer) {
+        observer.observe(chatContainer, {
+            childList: true,
+            subtree: true,
+            characterData: true
+        });
+    }
+});
+</script>
+{% endblock %}
