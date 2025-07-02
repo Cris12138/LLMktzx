@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=E:\gitClone\wendacore_medicalqa_v3\myenv
+set VIRTUAL_ENV=E:\gitClone\xy_neo4j_medicalqa_v3\myenv
 
 if not defined PROMPT set PROMPT=$P$G
 

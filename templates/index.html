@@ -10,14 +10,7 @@
                     <i class="fas fa-project-diagram"></i> 医疗知识图谱探索
                 </h4>
             </div>
-<!--            <div class="col-md-6 text-end">-->
-<!--                <a href="http://localhost:7474/browser/" target="_blank"-->
-<!--                   class="btn btn-outline-primary btn-sm"-->
-<!--                   data-bs-toggle="tooltip"-->
-<!--                   title="在新窗口打开Neo4j数据库管理界面">-->
-<!--&lt;!&ndash;                    <i class="fas fa-external-link-alt"></i> 访问图谱数据库&ndash;&gt;-->
-<!--                </a>-->
-<!--            </div>-->
+
         </div>
 
         <div class="row g-4">
@@ -57,7 +50,7 @@
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary btn-lg" id="queryButton">
                                     <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                                    执行智能查询
+                                    执行查询
                                 </button>
                             </div>
                         </form>
@@ -151,7 +144,7 @@
                 }
             },
             series: [
-                {
+                {   zoom: 2.5,  // 设置初始缩放为1.2倍
                     type: 'graph',
                     layout: 'force',
                     symbolSize: 50,
@@ -169,8 +162,8 @@
                         }
                     },
                     force: {
-                        repulsion: 1000,
-                        edgeLength: [10, 100]
+                        repulsion: 70,
+                        edgeLength: [50, 100]
                     },
                     focusNodeAdjacency: true,
                     draggable: true,

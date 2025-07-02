@@ -79,6 +79,45 @@
     box-shadow: 0 5px 15px rgba(24, 144, 255, 0.3);
 }
 
+/* 下拉菜单样式 */
+.dropdown-menu {
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: none;
+    padding: 0;
+}
+
+.dropdown-menu li a {
+    padding: 8px 15px;
+    transition: all 0.2s;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #f5f5f5;
+}
+
+.dropdown-menu .divider {
+    margin: 5px 0;
+    height: 1px;
+    background-color: #eee;
+}
+/* 帖子操作按钮样式 */
+.post-actions {
+    margin-top: 15px;
+}
+
+.post-actions .btn {
+    margin-right: 5px;
+}
+
+/* 小屏幕适配 */
+@media (max-width: 768px) {
+    .post-actions .btn {
+        display: block;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}
 /* 响应式调整 */
 @media (max-width: 768px) {
     .lyear-login-box {

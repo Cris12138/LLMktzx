@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/wendacore_medicalqa.iml" filepath="$PROJECT_DIR$/.idea/wendacore_medicalqa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/xy_neo4j_medicalqa.iml" filepath="$PROJECT_DIR$/.idea/xy_neo4j_medicalqa.iml" />
     </modules>
   </component>
 </project>

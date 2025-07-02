@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="E:\gitClone\wendacore_medicalqa_v3\myenv"
+VIRTUAL_ENV="E:\gitClone\xy_neo4j_medicalqa_v3\myenv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
