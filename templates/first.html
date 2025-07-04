@@ -1,45 +1,163 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4>欢迎来到ZZU康途智选医疗推荐系统</h4>
+<!-- 英雄区域 -->
+<div class="hero-section glass-card" style="margin-bottom: 24px; padding: 40px; text-align: center;">
+    <h1 style="font-size: 2.5rem; margin-bottom: 16px; background: var(--primary-gradient); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        康途智选医疗推荐系统
+    </h1>
+    <p class="lead" style="font-size: 1.25rem; color: var(--text-secondary); max-width: 800px; margin: 0 auto 24px;">
+        基于知识图谱的智能医疗推荐平台，为您提供个性化的医疗咨询和药品推荐服务
+    </p>
+    <a href="/wenda" class="btn-gradient" style="display: inline-flex; align-items: center; gap: 8px;">
+        <i class="mdi mdi-chat-processing" style="font-size: 20px;"></i> 开始咨询
+    </a>
+</div>
+
+<!-- 功能卡片区域 -->
+<div class="features-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 24px;">
+    <!-- 功能卡片1 -->
+    <div class="feature-card glass-card" style="padding: 24px; border-radius: var(--border-radius);">
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+            <div style="width: 48px; height: 48px; background: var(--primary-gradient); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white;">
+                <i class="mdi mdi-brain" style="font-size: 24px;"></i>
+            </div>
+            <h3 style="margin: 0; color: var(--primary-color);">智能问答</h3>
+        </div>
+        <p style="color: var(--text-secondary);">基于AI技术的医疗问题解答系统，24小时为您提供专业医疗咨询服务。</p>
+    </div>
+
+    <!-- 功能卡片2 -->
+    <div class="feature-card glass-card" style="padding: 24px; border-radius: var(--border-radius);">
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+            <div style="width: 48px; height: 48px; background: var(--primary-gradient); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white;">
+                <i class="mdi mdi-pill" style="font-size: 24px;"></i>
+            </div>
+            <h3 style="margin: 0; color: var(--primary-color);">药品推荐</h3>
+        </div>
+        <p style="color: var(--text-secondary);">根据您的症状和健康状况，推荐最适合的药品和治疗方案。</p>
+    </div>
+
+    <!-- 功能卡片3 -->
+    <div class="feature-card glass-card" style="padding: 24px; border-radius: var(--border-radius);">
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+            <div style="width: 48px; height: 48px; background: var(--primary-gradient); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white;">
+                <i class="mdi mdi-heart-pulse" style="font-size: 24px;"></i>
+            </div>
+            <h3 style="margin: 0; color: var(--primary-color);">健康评估</h3>
+        </div>
+        <p style="color: var(--text-secondary);">全面的健康状态测评，帮助您了解自身健康状况并提供改善建议。</p>
+    </div>
+</div>
+
+<!-- 系统介绍区域 -->
+<div class="intro-section glass-card" style="padding: 40px; margin-bottom: 24px;">
+    <div style="display: flex; flex-direction: column; gap: 24px;">
+        <div style="text-align: center; margin-bottom: 24px;">
+            <h2 style="color: var(--primary-color); position: relative; display: inline-block;">
+                <span style="position: relative; z-index: 2;">系统特色</span>
+                <span style="position: absolute; bottom: 0; left: 0; right: 0; height: 8px; background: rgba(37, 99, 235, 0.2); z-index: 1; border-radius: 4px;"></span>
+            </h2>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+            <div>
+                <h3 style="color: var(--secondary-color); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                    <i class="mdi mdi-chart-areaspline" style="color: var(--secondary-color);"></i> 知识图谱技术
+                </h3>
+                <p style="color: var(--text-secondary);">基于医疗知识图谱构建，整合了疾病、症状、药品、治疗方案等多维度医疗数据，提供精准的关联分析。</p>
+            </div>
+            
+            <div>
+                <h3 style="color: var(--secondary-color); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                    <i class="mdi mdi-robot" style="color: var(--secondary-color);"></i> AI智能推荐
+                </h3>
+                <p style="color: var(--text-secondary);">采用先进的机器学习算法，根据用户输入的症状和历史数据，智能推荐最适合的药品和治疗方案。</p>
+            </div>
+            
+            <div>
+                <h3 style="color: var(--secondary-color); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                    <i class="mdi mdi-shield-check" style="color: var(--secondary-color);"></i> 数据安全保障
+                </h3>
+                <p style="color: var(--text-secondary);">严格遵循医疗数据隐私保护标准，所有用户数据加密存储，确保您的医疗信息安全。</p>
+            </div>
+            
+            <div>
+                <h3 style="color: var(--secondary-color); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                    <i class="mdi mdi-account-group" style="color: var(--secondary-color);"></i> 专业医疗团队
+                </h3>
+                <p style="color: var(--text-secondary);">系统背后有专业医疗团队支持，定期更新医疗知识库，确保推荐内容的准确性和时效性。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 用户评价区域 -->
+<div class="testimonials-section glass-card" style="padding: 40px;">
+    <div style="text-align: center; margin-bottom: 32px;">
+        <h2 style="color: var(--primary-color);">用户评价</h2>
+        <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">听听我们的用户怎么说</p>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+        <!-- 评价1 -->
+        <div style="background: white; padding: 24px; border-radius: var(--border-radius); box-shadow: var(--shadow-md);">
+            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--bg-tertiary); display: flex; align-items: center; justify-content: center; color: var(--primary-color); font-weight: bold;">
+                    张
                 </div>
-                <div class="card-body">
-                    <div class="jumbotron bg-light">
-                        <h1 class="display-4">医疗药品服务智能推荐系统</h1>
-                        <p class="lead">为您提供专业的医疗知识图谱查询、智能问答、药品推荐和健康评估服务</p>
-                        <hr class="my-4">
-                        <p>本系统由ZZU-CAI-12团队开发，整合了先进的医疗知识图谱和人工智能技术。</p>
-                        <div class="row mt-4">
-                            <div class="col-md-4">
-                                <div class="feature-box text-center p-4">
-                                    <i class="mdi mdi-magnify mdi-48px text-primary"></i>
-                                    <h4>知识图谱查询</h4>
-                                    <p>探索医疗知识图谱，了解疾病、症状和药品之间的关系</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="feature-box text-center p-4">
-                                    <i class="mdi mdi-comment-question-outline mdi-48px text-success"></i>
-                                    <h4>智能问答</h4>
-                                    <p>获取个性化的医疗建议和药品推荐</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="feature-box text-center p-4">
-                                    <i class="mdi mdi-heart-pulse mdi-48px text-danger"></i>
-                                    <h4>健康评估</h4>
-                                    <p>评估您的健康状况，获取专业建议</p>
-                                </div>
-                            </div>
-                        </div>
+                <div>
+                    <h4 style="margin: 0; color: var(--text-primary);">张先生</h4>
+                    <div style="display: flex; gap: 4px; margin-top: 4px;">
+                        <i class="mdi mdi-star" style="color: var(--accent-color);"></i>
+                        <i class="mdi mdi-star" style="color: var(--accent-color);"></i>
+                        <i class="mdi mdi-star" style="color: var(--accent-color);"></i>
+                        <i class="mdi mdi-star" style="color: var(--accent-color);"></i>
+                        <i class="mdi mdi-star" style="color: var(--accent-color);"></i>
                     </div>
                 </div>
             </div>
+            <p style="color: var(--text-secondary); font-style: italic;">"这个系统的药品推荐非常准确，帮我找到了最适合我症状的药物，效果很好。"</p>
+        </div>
+        
+        <!-- 评价2 -->
+        <div style="background: white; padding: 24px; border-radius: var(--border-radius); box-shadow: var(--shadow-md);">
+            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--bg-tertiary); display: flex; align-items: center; justify-content: center; color: var(--primary-color); font-weight: bold;">
+                    李
+                </div>
+                <div>
+                    <h4 style="margin: 0; color: var(--text-primary);">李女士</h4>
+                    <div style="display: flex; gap: 4px; margin-top: 4px;">
+                        <i class="mdi mdi-star" style="color: var(--accent-color);"></i>
+                        <i class="mdi mdi-star" style="color: var(--accent-color);"></i>
+                        <i class="mdi mdi-star" style="color: var(--accent-color);"></i>
+                        <i class="mdi mdi-star" style="color: var(--accent-color);"></i>
+                        <i class="mdi mdi-star" style="color: var(--accent-color);"></i>
+                    </div>
+                </div>
+            </div>
+            <p style="color: var(--text-secondary); font-style: italic;">"健康评估功能很实用，让我更了解自己的身体状况，给出的改善建议也很专业。"</p>
+        </div>
+        
+        <!-- 评价3 -->
+        <div style="background: white; padding: 24px; border-radius: var(--border-radius); box-shadow: var(--shadow-md);">
+            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--bg-tertiary); display: flex; align-items: center; justify-content: center; color: var(--primary-color); font-weight: bold;">
+                    王
+                </div>
+                <div>
+                    <h4 style="margin: 0; color: var(--text-primary);">王医生</h4>
+                    <div style="display: flex; gap: 4px; margin-top: 4px;">
+                        <i class="mdi mdi-star" style="color: var(--accent-color);"></i>
+                        <i class="mdi mdi-star" style="color: var(--accent-color);"></i>
+                        <i class="mdi mdi-star" style="color: var(--accent-color);"></i>
+                        <i class="mdi mdi-star" style="color: var(--accent-color);"></i>
+                        <i class="mdi mdi-star-half" style="color: var(--accent-color);"></i>
+                    </div>
+                </div>
+            </div>
+            <p style="color: var(--text-secondary); font-style: italic;">"作为医疗从业者，我认为这个系统的知识图谱构建得很专业，对患者自我管理很有帮助。"</p>
         </div>
     </div>
 </div>

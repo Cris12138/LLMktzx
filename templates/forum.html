@@ -1,202 +1,571 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <main class="lyear-layout-content">
-        <div class="container-fluid">
-            <!-- 论坛头部 -->
-            <div class="card-header bg-primary text-white">
-                <h4 class="mb-0"><i class="fas fa-comments"></i> 医疗论坛</h4>
-            </div>
-            <div class="container-fluid mt-3">
-                <form method="get" action="{% url 'myneo4j:forum' %}" class="mb-4">
-                    <div class="input-group shadow-lg rounded-pill">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>医疗科技论坛</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #0d5bb8;
+            --secondary: #00bcd4;
+            --success: #4caf50;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --hover-shadow: 0 12px 40px rgba(26, 115, 232, 0.25);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7f1 100%);
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: 160px;
+        }
+
+        /* 头部样式 */
+        .forum-header {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 2rem;
+        }
+
+        .forum-header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: pulse 8s infinite linear;
+        }
+
+        .forum-header h4 {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .forum-header i {
+            margin-right: 12px;
+            font-size: 1.8rem;
+            vertical-align: middle;
+        }
+
+        /* 搜索区域 */
+        .search-container {
+            position: relative;
+            margin-bottom: 2rem;
+            z-index: 10;
+        }
+
+        .search-box {
+            border-radius: 50px;
+            border: none;
+            box-shadow: 0 6px 20px rgba(26, 115, 232, 0.3);
+            padding-left: 1.5rem;
+            padding-right: 4.5rem;
+            height: 55px;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .search-box:focus {
+            box-shadow: 0 10px 30px rgba(26, 115, 232, 0.4), 0 0 0 3px rgba(26, 115, 232, 0.2);
+            background: white;
+            outline: none;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            height: 45px;
+            width: 120px;
+            border-radius: 50px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border: none;
+            color: white;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(26, 115, 232, 0.4);
+            overflow: hidden;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(26, 115, 232, 0.5);
+        }
+
+        .search-btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .search-btn:hover::after {
+            left: 100%;
+        }
+
+        /* 搜索结果提示 */
+        .search-alert {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--secondary);
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+        }
+
+        /* 帖子列表 */
+        .posts-container {
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            padding-right: 8px;
+            margin-bottom: 20px;
+        }
+
+        .post-card {
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .post-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .post-card:hover::before {
+            opacity: 1;
+        }
+
+        .post-card h5 {
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+
+        .post-card:hover h5 {
+            color: var(--primary-dark);
+        }
+
+        .post-content {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+            max-height: 3.2em;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .post-stats span {
+            margin-left: 15px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .post-stats i {
+            margin-right: 5px;
+            font-size: 0.9rem;
+        }
+
+        .like-count {
+            color: #e74c3c;
+        }
+
+        .badge-custom {
+            background: linear-gradient(90deg, rgba(26, 115, 232, 0.1) 0%, rgba(0, 188, 212, 0.1) 100%);
+            color: var(--primary);
+            border-radius: 50px;
+            padding: 0.35em 0.9em;
+            font-weight: 500;
+            border: 1px solid rgba(26, 115, 232, 0.15);
+        }
+
+        /* 分页样式 */
+        .pagination-container {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-item .page-link {
+            border-radius: 8px !important;
+            margin: 0 5px;
+            border: none;
+            color: var(--primary);
+            font-weight: 500;
+            transition: var(--transition);
+            min-width: 40px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .page-item.active .page-link {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border: none;
+            box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);
+        }
+
+        .page-item:not(.active) .page-link:hover {
+            background: rgba(26, 115, 232, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(26, 115, 232, 0.2);
+        }
+
+        /* 发帖区域 */
+        .post-form-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.08);
+            padding: 1.5rem 0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .post-input {
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            padding: 0.75rem 1.25rem;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .post-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
+            outline: none;
+        }
+
+        .post-btn {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem;
+            transition: var(--transition);
+            height: 100%;
+            box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);
+        }
+
+        .post-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(26, 115, 232, 0.4);
+        }
+
+        /* 动画效果 */
+        @keyframes pulse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+
+        /* 滚动条美化 */
+        .posts-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .posts-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 10px;
+        }
+
+        .posts-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border-radius: 10px;
+        }
+
+        .posts-container::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, var(--primary-dark), var(--secondary));
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .post-form-container {
+                height: 180px;
+                padding: 10px 0;
+            }
+
+            body {
+                padding-bottom: 190px;
+            }
+
+            .search-btn {
+                width: 90px;
+            }
+
+            .post-card {
+                margin-bottom: 1rem;
+            }
+
+            .post-stats span {
+                margin-left: 8px;
+            }
+        }
+
+        /* 医疗科技元素 */
+        .medical-icon {
+            position: absolute;
+            opacity: 0.03;
+            z-index: -1;
+            font-size: 12rem;
+        }
+
+        .icon-1 { top: 10%; left: 5%; animation: float 15s infinite linear; }
+        .icon-2 { top: 25%; right: 5%; animation: float 18s infinite linear reverse; }
+        .icon-3 { bottom: 20%; left: 15%; animation: float 20s infinite linear; }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- 论坛头部 -->
+        <div class="forum-header text-center">
+            <h4><i class="fas fa-heartbeat"></i> 医疗科技论坛</h4>
+        </div>
+
+        <div class="container mt-4">
+            <!-- 医疗科技图标装饰 -->
+            <i class="fas fa-heartbeat medical-icon icon-1"></i>
+            <i class="fas fa-stethoscope medical-icon icon-2"></i>
+            <i class="fas fa-clinic-medical medical-icon icon-3"></i>
+
+            <!-- 搜索区域 -->
+            <div class="search-container">
+                <form method="get" action="{% url 'myneo4j:forum' %}">
+                    <div class="input-group">
                         <input type="text"
                                name="q"
-                               class="form-control border-0 rounded-start-pill"
-                               placeholder="输入关键词搜索帖子..."
+                               class="form-control search-box"
+                               placeholder="输入关键词搜索医疗相关帖子..."
                                value="{{ search_query }}">
-                        <button type="submit" class="btn btn-primary rounded-end-pill px-4">
-                            <i class="fas fa-search me-2"></i> 搜索  <!-- 添加文字 -->
+                        <button type="submit" class="btn search-btn">
+                            <i class="fas fa-search me-2"></i> 搜索
                         </button>
                     </div>
                 </form>
-
-                <!-- 搜索结果提示 -->
-                {% if search_query %}
-                <div class="alert alert-info alert-dismissible fade show">
-                    找到 <strong>{{ posts.paginator.count }}</strong> 条关于 "{{ search_query }}" 的结果
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-                {% endif %}
             </div>
-            <!-- 帖子列表（更大的可滚动区域） -->
-            <div class="row mt-4" style="height: calc(100vh - 200px); overflow-y: auto; margin-bottom: 10px;">
-                <div class="col-md-12">
-                    <div class="card shadow-sm">
-                        <div class="card-body p-0">
-                            <div class="list-group list-group-flush">
-                                {% for post in posts %}
-                                <div class="list-group-item list-group-item-action">
-                                    <a href="{% url 'myneo4j:post_detail' post.id %}" class="text-decoration-none text-dark">
-                                        <div class="d-flex w-100 justify-content-between">
-                                            <h5 class="mb-1">{{ post.title }}</h5>
-                                            <small class="text-muted">{{ post.created_at|timesince }}前</small>
+            <!-- 搜索结果提示 -->
+            {% if search_query %}
+            <div class="alert search-alert alert-dismissible fade show fade-in">
+                找到 <strong>{{ posts.paginator.count }}</strong> 条关于 "{{ search_query }}" 的结果
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {% endif %}
+
+            <!-- 帖子列表 -->
+            <div class="posts-container">
+                <div class="row">
+                    <div class="col-12">
+                        {% for post in posts %}
+                        <div class="post-card fade-in {% cycle 'delay-1' 'delay-2' 'delay-3' %}">
+                            <div class="card-body">
+                                <a href="{% url 'myneo4j:post_detail' post.id %}" class="text-decoration-none">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5>{{ post.title }}</h5>
+                                        <small class="text-muted">{{ post.created_at|timesince }}前</small>
+                                    </div>
+                                    <p class="post-content">{{ post.content|truncatechars:100 }}</p>
+                                    <div class="post-meta">
+                                        <small class="text-muted">作者: {{ post.author.username }}</small>
+                                        <div class="post-stats">
+                                            <span class="badge-custom">
+                                                <i class="fas fa-thumbs-up text-danger"></i>
+                                                <span class="like-count">{{ post.likes_count }} 点赞</span>
+                                            </span>
+                                            <span>
+                                                <i class="fas fa-comment me-1 text-primary"></i> {{ post.replies.count }} 回复
+                                            </span>
                                         </div>
-                                        <p class="mb-1">{{ post.content|truncatechars:100 }}</p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <small class="text-muted">作者: {{ post.author.username }}</small>
-                                            <div>
-                                                <span class="badge bg-light text-dark me-2">
-                                                    <i class="fas fa-thumbs-up text-primary"></i>
-                                                    <span class="like-count">{{ post.likes_count }} 点赞</span>
-                                                </span>
-                                                <small><i class="fas fa-comment me-1"></i> {{ post.replies.count }} 回复</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                {% empty %}
-                                <div class="list-group-item">
-                                    <p class="text-muted">暂无帖子</p>
-                                </div>
-                                {% endfor %}
+                                    </div>
+                                </a>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 修改分页链接保持搜索参数 -->
-            <div class="row mt-3">
-                <div class="col-md-12">
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center">
-                            {% if posts.has_previous %}
-                            <li class="page-item">
-                                <a class="page-link"
-                                   href="?page={{ posts.previous_page_number }}&q={{ search_query|urlencode }}">
-                                    上一页
-                                </a>
-                            </li>
-                            {% else %}
-                            <li class="page-item disabled">
-                                <a class="page-link">上一页</a>
-                            </li>
-                            {% endif %}
-
-                            {% for num in posts.paginator.page_range %}
-                            <li class="page-item {% if num == posts.number %}active{% endif %}">
-                                <a class="page-link"
-                                   href="?page={{ num }}&q={{ search_query|urlencode }}">
-                                    {{ num }}
-                                </a>
-                            </li>
-                            {% endfor %}
-
-                            {% if posts.has_next %}
-                            <li class="page-item">
-                                <a class="page-link"
-                                   href="?page={{ posts.next_page_number }}&q={{ search_query|urlencode }}">
-                                    下一页
-                                </a>
-                            </li>
-                            {% else %}
-                            <li class="page-item disabled">
-                                <a class="page-link">下一页</a>
-                            </li>
-                            {% endif %}
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-
-            <!-- 固定底部的快速发帖区域（更小的框架） -->
-            <div class="fixed-bottom bg-white p-2 border-top" style="box-shadow: 0 -2px 10px rgba(0,0,0,0.1); height: 150px;">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form action="{% url 'myneo4j:create_post' %}" method="post" class="mb-0">
-                                {% csrf_token %}
-                                <div class="row g-2 align-items-center">
-                                    <div class="col-md-4">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control form-control-sm" id="postTitle" placeholder="帖子标题" name="title" required>
-                                            <label for="postTitle">帖子标题</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <textarea class="form-control form-control-sm" placeholder="写下您的内容" name="content" style="height: 60px" required></textarea>
-                                            <label>内容</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button type="submit" class="btn btn-primary btn-sm w-100 h-100">
-                                            <i class="fas fa-paper-plane me-1"></i> 发布
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+                        {% empty %}
+                        <div class="post-card">
+                            <div class="card-body text-center py-4">
+                                <i class="fas fa-comment-slash fa-2x text-muted mb-3"></i>
+                                <p class="text-muted">暂无帖子，快来发布第一个吧！</p>
+                            </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
+            </div>
+            <!-- 分页 -->
+            <div class="pagination-container">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if posts.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="?page={{ posts.previous_page_number }}&q={{ search_query|urlencode }}">
+                                上一页
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link">上一页</a>
+                        </li>
+                        {% endif %}
+                        {% for num in posts.paginator.page_range %}
+                        <li class="page-item {% if num == posts.number %}active{% endif %}">
+                            <a class="page-link"
+                               href="?page={{ num }}&q={{ search_query|urlencode }}">
+                                {{ num }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                        {% if posts.has_next %}
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="?page={{ posts.next_page_number }}&q={{ search_query|urlencode }}">
+                                下一页
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link">下一页</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
             </div>
         </div>
+    </div>
+    <!-- 发帖区域 -->
+    <div class="post-form-container">
+        <div class="container">
+            <form action="{% url 'myneo4j:create_post' %}" method="post">
+                {% csrf_token %}
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-4">
+                        <div class="form-floating">
+                            <input type="text" class="form-control post-input" id="postTitle" placeholder="帖子标题" name="title" required>
+                            <label for="postTitle">帖子标题</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <textarea class="form-control post-input" placeholder="写下您的内容" name="content" style="height: 60px" required></textarea>
+                            <label>内容</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn post-btn w-100 h-100">
+                            <i class="fas fa-paper-plane me-1"></i> 发布
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        // 添加简单的动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加悬停效果
+            const postCards = document.querySelectorAll('.post-card');
+            postCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-5px)';
+                    card.style.boxShadow = '0 12px 40px rgba(26, 115, 232, 0.25)';
+                });
 
-        <style>
-            /* 论坛专用样式 */
-            .list-group-item {
-                border-left: none;
-                border-right: none;
-                transition: all 0.3s;
-            }
-            .list-group-item:hover {
-                background-color: #f8f9fa;
-            }
-            .list-group-item h5 {
-                color: #007bff;
-            }
-            .card-header {
-                border-radius: 0.25rem 0.25rem 0 0 !important;
-            }
-            .badge {
-                padding: 0.35em 0.65em;
-            }
-            /* 搜索框样式 */
-            .search-box {
-                transition: all 0.3s ease;
-            }
-            .search-box:focus {
-                box-shadow: 0 0 15px rgba(13, 110, 253, 0.25);
-            }
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0)';
+                    card.style.boxShadow = '0 8px 30px rgba(0, 0, 0, 0.12)';
+                });
+            });
 
-            /* 高亮搜索结果 */
-            .highlight {
-                background-color: #fff3cd;
-                padding: 2px 4px;
-                border-radius: 3px;
-            }
-            /* 防止底部固定区域遮挡内容 */
-            body {
-                padding-bottom: 160px;
-            }
+            // 按钮悬停效果
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('mouseenter', () => {
+                    btn.style.transform = 'translateY(-3px)';
+                });
 
-            /* 响应式调整 */
-            @media (max-width: 768px) {
-                .fixed-bottom {
-                    height: 180px !important;
-                    padding: 5px !important;
-                }
-                body {
-                    padding-bottom: 190px;
-                }
-                .lyear-layout-content {
-                    padding-bottom: 10px !important;
-                }
-                .form-control-sm {
-                    font-size: 0.875rem;
-                }
-            }
-        </style>
-    </main>
+                btn.addEventListener('mouseleave', () => {
+                    btn.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
 {% endblock %}

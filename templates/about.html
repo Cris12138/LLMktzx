@@ -1,91 +1,523 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4>关于我们</h4>
+<!-- 关于我们主区域 -->
+<div class="about-container">
+    <!-- 头部横幅 -->
+    <div class="about-header glass-card">
+        <div class="header-content">
+            <h1>关于康途智选</h1>
+            <p class="subtitle">致力于通过人工智能技术改善医疗健康服务体验</p>
+        </div>
+    </div>
+
+    <!-- 公司简介 -->
+    <div class="company-intro glass-card">
+        <div class="intro-grid">
+            <div class="intro-text">
+                <h2><i class="mdi mdi-information"></i> 公司简介</h2>
+                <div class="intro-content">
+                    <p>康途智选医疗推荐知识中枢是由郑州大学CAI-ktzx团队开发的智能医疗推荐平台。我们整合了先进的自然语言处理技术和医疗知识图谱进行模型整合，为用户提供安全的健康服务咨询和管理服务。</p>
+                    <p>我们的使命是通过技术创新降低医疗信息获取门槛，让每个人都能便捷地获取专业、可靠的健康信息和建议。</p>
                 </div>
-                <div class="card-body">
-                    <div class="about-section">
-                        <h2 class="mb-4">ZZU康途智选医疗推荐知识中枢</h2>
-                        
-                        <div class="row mb-4">
-                            <div class="col-md-6">
-                                <h4><i class="mdi mdi-lightbulb-on-outline"></i> 我们的使命</h4>
-                                <p>致力于通过人工智能技术，为患者和医疗工作者提供准确、及时的医疗信息和建议，改善医疗决策过程。</p>
-                            </div>
-                            <div class="col-md-6">
-                                <h4><i class="mdi mdi-target"></i> 我们的愿景</h4>
-                                <p>成为国内领先的医疗知识服务平台，通过技术创新推动医疗健康领域的智能化发展。</p>
-                            </div>
-                        </div>
-                        
-                        <h3 class="mt-5 mb-3">团队介绍</h3>
-                        <div class="row">
-                            <div class="col-md-4 mb-4">
-                                <div class="team-card text-center p-3">
-                                    <div class="avatar mb-3">
-                                        <i class="mdi mdi-account-circle mdi-48px"></i>
-                                    </div>
-                                    <h5>ZZU-CAI-12团队</h5>
-                                    <p class="text-muted">核心开发团队</p>
-                                    <p>由郑州大学计算机与人工智能学院的优秀学生组成，专注于医疗知识图谱和推荐系统的研究与应用。</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-4">
-                                <div class="team-card text-center p-3">
-                                    <div class="avatar mb-3">
-                                        <i class="mdi mdi-school mdi-48px"></i>
-                                    </div>
-                                    <h5>学术支持</h5>
-                                    <p class="text-muted">郑州大学</p>
-                                    <p>依托郑州大学强大的学术资源和医疗合作网络，确保系统内容的专业性和可靠性。</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-4">
-                                <div class="team-card text-center p-3">
-                                    <div class="avatar mb-3">
-                                        <i class="mdi mdi-hospital-building mdi-48px"></i>
-                                    </div>
-                                    <h5>医疗合作</h5>
-                                    <p class="text-muted">合作医疗机构</p>
-                                    <p>与多家三甲医院合作，由专业医生团队提供内容审核和医学指导。</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <h3 class="mt-5 mb-3">联系我们</h3>
-                        <div class="contact-info">
-                            <p><i class="mdi mdi-email"></i> 邮箱：contact@zzu-medical.com</p>
-                            <p><i class="mdi mdi-phone"></i> 电话：0371-12345678</p>
-                            <p><i class="mdi mdi-map-marker"></i> 地址：河南省郑州市科学大道100号郑州大学</p>
-                        </div>
-                    </div>
+            </div>
+            <div class="intro-image">
+                <img src="/static/images/teamlogo.png" alt="医疗团队" class="team-logo">
+            </div>
+        </div>
+    </div>
+
+    <!-- 发展历程 -->
+    <div class="timeline-section glass-card">
+        <h2><i class="mdi mdi-timeline"></i> 发展历程</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">2025.06</div>
+                <div class="timeline-content">
+                    <h3>项目立项</h3>
+                    <p>郑州大学CAI-ktzx团队组建，开始医疗知识获取和架构设计</p>
                 </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2025.06</div>
+                <div class="timeline-content">
+                    <h3>系统原型开发</h3>
+                    <p>完成核心功能和实现基本功能测试</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2025.7</div>
+                <div class="timeline-content">
+                    <h3>预期测试版上线</h3>
+                    <p>在大学内进行初步内部测试</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2025.09</div>
+                <div class="timeline-content">
+                    <h3>正式版发布</h3>
+                    <p>面向公众开放服务，获取大众意见，不断更新建设</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 我们的团队 - 修改为5人无头像 -->
+    <div class="team-section glass-card">
+        <h2><i class="mdi mdi-account-group"></i> 我们的团队</h2>
+        <div class="team-grid">
+            <!-- 团队成员1 -->
+            <div class="team-card">
+                <div class="team-info">
+                    <h3>孙经理</h3>
+                    <p class="position">项目经理</p>
+                    <p class="bio">项目经理，负责经营规划项目的进程和监督项目</p>
+                </div>
+            </div>
+
+            <!-- 团队成员2 -->
+            <div class="team-card">
+                <div class="team-info">
+                    <h3>马经理</h3>
+                    <p class="position">产品经理</p>
+                    <p class="bio">全权负责本项产品研制、经营、宣传等</p>
+                </div>
+            </div>
+
+            <!-- 团队成员3 -->
+            <div class="team-card">
+                <div class="team-info">
+                    <h3>李总监</h3>
+                    <p class="position">技术总监</p>
+                    <p class="bio">负责技术内容开发，指导和参与bug修正和需求实现</p>
+                </div>
+            </div>
+
+            <!-- 团队成员4 -->
+            <div class="team-card">
+                <div class="team-info">
+                    <h3>Coder管</h3>
+                    <p class="position">Coder后端工程师</p>
+                    <p class="bio">负责后端开发，数据分析整合，实践技术可行</p>
+                </div>
+            </div>
+
+            <!-- 新增团队成员5 -->
+            <div class="team-card">
+                <div class="team-info">
+                    <h3>Coder常</h3>
+                    <p class="position">Coder前端工程师</p>
+                    <p class="bio">负责前端内容开发设计，接口规范与对接，实现项目预期效果</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 技术优势 -->
+    <div class="tech-section glass-card">
+        <h2><i class="mdi mdi-lightbulb-on"></i> 技术优势</h2>
+        <div class="tech-grid">
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <i class="mdi mdi-graphql"></i>
+                </div>
+                <h3>知识图谱技术</h3>
+                <p>构建包含30万+医疗实体的知识图谱，实现精准的医疗知识关联</p>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <i class="mdi mdi-robot"></i>
+                </div>
+                <h3>AI智能推荐</h3>
+                <p>采用基于知识的AI推荐检索，提供精准安全的保健服务</p>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <i class="mdi mdi-shield-lock"></i>
+                </div>
+                <h3>数据安全</h3>
+                <p>符合医疗数据隐私保护标准，AES-256加密存储</p>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-icon">
+                    <i class="mdi mdi-update"></i>
+                </div>
+                <h3>持续更新</h3>
+                <p>每周更新医疗知识库，确保信息准确性和时效性</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 联系我们 - 压缩空白 -->
+    <div class="contact-section glass-card">
+        <h2><i class="mdi mdi-email"></i> 联系我们</h2>
+        <div class="contact-info">
+            <div class="contact-item">
+                <i class="mdi mdi-map-marker"></i>
+                <p>河南省郑州市科学大道100号郑州大学</p>
+            </div>
+            <div class="contact-item">
+                <i class="mdi mdi-phone"></i>
+                <p>0371-6778XXXX</p>
+            </div>
+            <div class="contact-item">
+                <i class="mdi mdi-email"></i>
+                <p>contact@kangtuzhixuan.com</p>
             </div>
         </div>
     </div>
 </div>
 
 <style>
-.about-section {
+/* 关于页面专用样式 */
+.about-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 减少间隙 */
     padding: 20px;
 }
+
+.about-header {
+    padding: 40px 30px; /* 压缩头部内边距 */
+    text-align: center;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+}
+
+.about-header h1 {
+    font-size: 3rem; /* 增大标题字体 */
+    margin-bottom: 12px;
+    background: var(--primary-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.about-header .subtitle {
+    font-size: 1.5rem; /* 增大副标题字体 */
+    color: var(--text-secondary);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.company-intro {
+    padding: 30px; /* 压缩内边距 */
+}
+
+.intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px; /* 减少间隙 */
+    align-items: center;
+}
+
+.intro-text h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 2rem; /* 增大标题大小 */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.intro-content p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 14px;
+    font-size: 1.2rem; /* 增大正文字体 */
+}
+
+.team-logo {
+    width: 100%; /* 使图片宽度占满容器 */
+    max-width: 400px; /* 设置最大宽度 */
+    height: auto; /* 保持图片比例 */
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md); /* 减小阴影 */
+}
+
+.timeline-section {
+    padding: 30px; /* 压缩内边距 */
+}
+
+.timeline-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 28px;
+    font-size: 2rem; /* 增大标题大小 */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 25px; /* 压缩时间线左侧内边距 */
+}
+
+.timeline:before {
+    content: '';
+    position: absolute;
+    left: 8px; /* 调整位置 */
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--primary-gradient);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 26px; /* 减少间距 */
+}
+
+.timeline-date {
+    position: absolute;
+    left: -26px; /* 调整位置 */
+    top: 0;
+    width: 52px; /* 减小尺寸 */
+    height: 52px;
+    border-radius: 50%;
+    background: var(--primary-gradient);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.2rem; /* 增大字体 */
+    box-shadow: var(--shadow-sm); /* 减小阴影 */
+}
+
+.timeline-content {
+    margin-left: 45px; /* 减少左边距 */
+    padding: 16px; /* 压缩内边距 */
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm); /* 减小阴影 */
+}
+
+.timeline-content h3 {
+    color: var(--primary-color);
+    margin-bottom: 6px;
+    font-size: 1.5rem; /* 增大标题大小 */
+}
+
+.timeline-content p {
+    color: var(--text-secondary);
+    font-size: 1.2rem; /* 增大正文字体 */
+}
+
+.team-section {
+    padding: 30px; /* 压缩内边距 */
+}
+
+.team-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 24px; /* 减少间距 */
+    font-size: 2rem; /* 增大标题大小 */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* 调整最小宽度 */
+    gap: 18px; /* 减少间隙 */
+}
+
+/* 修改团队卡片样式（无头像） */
 .team-card {
-    background: #f9f9f9;
-    border-radius: 8px;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm); /* 减小阴影 */
+    overflow: hidden;
+    transition: var(--transition);
+    padding: 20px; /* 添加内边距 */
+    border-left: 4px solid var(--primary-color); /* 添加左边框作为视觉标识 */
+}
+
+.team-card:hover {
+    transform: translateY(-3px); /* 减小悬停效果 */
+    box-shadow: var(--shadow-md);
+}
+
+.team-info {
+    text-align: left; /* 文本左对齐 */
+}
+
+.team-info h3 {
+    margin: 0 0 6px;
+    color: var(--text-primary);
+    font-size: 1.6rem; /* 增大名字字体 */
+}
+
+.team-info .position {
+    color: var(--primary-color);
+    font-weight: 500;
+    margin-bottom: 10px;
+    font-size: 1.3rem; /* 增大职位字体 */
+}
+
+.team-info .bio {
+    color: var(--text-secondary);
+    font-size: 1.2rem; /* 增大简介字体 */
+    line-height: 1.6;
+}
+
+.tech-section {
+    padding: 30px; /* 压缩内边距 */
+}
+
+.tech-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 24px;
+    font-size: 2rem; /* 增大标题大小 */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* 调整最小宽度 */
+    gap: 18px; /* 减少间隙 */
+}
+
+.tech-card {
+    padding: 20px; /* 压缩内边距 */
+    text-align: center;
+}
+
+.tech-icon i {
+    font-size: 2.2rem; /* 减小图标 */
+    margin-bottom: 12px;
+}
+
+.tech-card h3 {
+    font-size: 1.5rem; /* 增大标题大小 */
+    margin-bottom: 8px;
+}
+
+.tech-card p {
+    font-size: 1.2rem; /* 增大正文字体 */
+    line-height: 1.6;
+}
+
+/* 修改后的联系信息样式 - 压缩空白 */
+.contact-section {
+    padding: 30px 20px; /* 压缩内边距 */
+    text-align: center;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px; /* 减少间隙 */
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 15px; /* 压缩内边距 */
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem; /* 增大字体 */
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.7);
+    padding: 12px 20px; /* 压缩内边距 */
+    border-radius: var(--border-radius);
+    width: 100%;
+    box-shadow: var(--shadow-sm);
     transition: all 0.3s ease;
 }
-.team-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+
+.contact-item:hover {
+    transform: translateY(-2px); /* 减小悬停效果 */
+    box-shadow: var(--shadow-md);
+    background: white;
 }
-.contact-info i {
-    margin-right: 10px;
-    color: #2196F3;
+
+.contact-item i {
+    color: var(--primary-color);
+    font-size: 1.5rem; /* 增大图标 */
+    min-width: 28px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .intro-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .team-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .contact-item {
+        padding: 10px 15px;
+        font-size: 1.1rem;
+    }
+
+    .about-header {
+        padding: 30px 20px;
+    }
+
+    .company-intro,
+    .timeline-section,
+    .team-section,
+    .tech-section,
+    .contact-section {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-item {
+        flex-direction: row; /* 保持水平布局 */
+        text-align: left;
+        gap: 8px;
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    .timeline-date {
+        width: 48px;
+        height: 48px;
+        font-size: 1rem;
+        left: -24px;
+    }
+
+    .timeline-content {
+        margin-left: 40px;
+        padding: 14px;
+    }
+
+    .about-header h1 {
+        font-size: 2rem;
+    }
+
+    .about-header .subtitle {
+        font-size: 1.2rem;
+    }
+
+    .team-logo {
+        max-width: 300px; /* 在小屏幕上进一步缩小图片 */
+    }
 }
 </style>
+<script>
+// 检查是否有自动滚动到底部的代码
+document.addEventListener("DOMContentLoaded", function() {
+    // 移除任何自动滚动到底部的代码
+    if (typeof window.scrollTo === 'function') {
+        window.scrollTo(0, 0);
+    }
+});
+</script>
 {% endblock %}

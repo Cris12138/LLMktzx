@@ -2,18 +2,25 @@
 {% load static %}
 
 {% block content %}
-<main class="lyear-layout-content">
+<main>
     <div class="container-fluid">
         <!-- 返回按钮 -->
-        <div class="mb-3">
-            <a href="{% url 'myneo4j:forum' %}" class="btn btn-outline-secondary">
+        <div class="mb-4">
+            <a href="{% url 'myneo4j:forum' %}" class="btn btn-gradient-back">
                 <i class="fas fa-arrow-left me-2"></i>返回论坛
             </a>
         </div>
 
+        <!-- 医疗科技装饰元素 -->
+        <div class="medical-icons">
+            <i class="fas fa-heartbeat icon-1"></i>
+            <i class="fas fa-dna icon-2"></i>
+            <i class="fas fa-stethoscope icon-3"></i>
+        </div>
+
         <!-- 帖子详情卡片 -->
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
+        <div class="card post-detail-card shadow-lg">
+            <div class="card-header gradient-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <h4 class="mb-0">{{ post.title }}</h4>
                     <small class="text-white-50">{{ post.created_at|date:"Y-m-d H:i" }}</small>
@@ -21,8 +28,10 @@
             </div>
             <div class="card-body">
                 <!-- 作者信息 -->
-                <div class="d-flex align-items-center mb-3">
-                    <i class="fas fa-user-circle fa-2x text-secondary me-2"></i>
+                <div class="d-flex align-items-center mb-4">
+                    <div class="avatar-circle me-3">
+                        <i class="fas fa-user-md"></i>
+                    </div>
                     <div>
                         <h6 class="mb-0">{{ post.author.username }}</h6>
                         <small class="text-muted">发布于 {{ post.created_at|timesince }}前</small>
@@ -35,7 +44,7 @@
                 </div>
 
                 <!-- 操作按钮 -->
-                <div class="d-flex justify-content-start mt-3">
+                <div class="d-flex justify-content-start mt-4">
                     {% if user.is_authenticated %}
                     <button class="btn like-btn {% if is_liked %}liked{% endif %}" data-post-id="{{ post.id }}" title="点赞">
                         <img src="{% if is_liked %}https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2021Active.png{% else %}https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2021White.png{% endif %}"
@@ -53,7 +62,7 @@
                 </div>
 
                 <!-- 统计信息 -->
-                <div class="d-flex justify-content-between text-muted small mt-2">
+                <div class="d-flex justify-content-between text-muted small mt-3">
                     <span><i class="fas fa-eye me-1"></i> {{ post.views }} 浏览</span>
                     <span><i class="fas fa-comments me-1"></i> {{ post.replies.count }} 回复</span>
                 </div>
@@ -62,49 +71,51 @@
 
         <!-- 回复表单 -->
         {% if user.is_authenticated %}
-        <div class="card shadow-sm mt-4" id="reply-form">
-            <div class="card-header">
+        <div class="card reply-form-card shadow-lg mt-4" id="reply-form">
+            <div class="card-header gradient-subheader">
                 <h5 class="mb-0"><i class="fas fa-reply me-2"></i>发表回复</h5>
             </div>
             <div class="card-body">
                 <form method="post" action="{% url 'myneo4j:post_detail' post.id %}">
                     {% csrf_token %}
                     <div class="form-floating mb-3">
-                        <textarea class="form-control" name="content"
+                        <textarea class="form-control post-input" name="content"
                                   style="height: 100px" placeholder="写下您的回复"
                                   required></textarea>
                         <label>回复内容</label>
                     </div>
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-gradient-submit">
                         <i class="fas fa-paper-plane me-2"></i>提交回复
                     </button>
                 </form>
             </div>
         </div>
         {% else %}
-        <div class="alert alert-warning mt-4">
+        <div class="alert alert-gradient mt-4">
             <i class="fas fa-exclamation-circle me-2"></i>
             请<a href="{% url 'login' %}?next={{ request.path }}" class="alert-link">登录</a>后发表回复
         </div>
         {% endif %}
 
         <!-- 回复列表 -->
-        <div class="card shadow-sm mt-4">
-            <div class="card-header">
+        <div class="card shadow-lg mt-4">
+            <div class="card-header gradient-subheader">
                 <h5 class="mb-0"><i class="fas fa-comments me-2"></i>全部回复 ({{ post.replies.count }})</h5>
             </div>
             <div class="card-body">
                 {% if post.replies.count > 0 %}
                     {% for reply in post.replies.all %}
-                    <div class="reply-item mb-4 pb-3 border-bottom">
+                    <div class="reply-item mb-4 pb-3 border-bottom fade-in delay-{{ forloop.counter0|add:1 }}">
                         <div class="d-flex align-items-center mb-2">
-                            <i class="fas fa-user-circle fa-lg text-primary me-2"></i>
+                            <div class="avatar-circle-sm me-2">
+                                <i class="fas fa-user"></i>
+                            </div>
                             <div>
                                 <h6 class="mb-0">{{ reply.author.username }}</h6>
                                 <small class="text-muted">{{ reply.created_at|timesince }}前</small>
                             </div>
                         </div>
-                        <div class="ps-4 ms-2">
+                        <div class="ps-5 ms-1">
                             {{ reply.content|linebreaks }}
                         </div>
                     </div>
@@ -136,6 +147,11 @@
         if (likeBtn) {
             const likeIcon = likeBtn.querySelector('.like-icon');
 
+            // 添加心跳动画效果
+            if (likeBtn.classList.contains('liked')) {
+                likeIcon.classList.add('heartbeat');
+            }
+
             likeBtn.addEventListener('click', function() {
                 const postId = this.dataset.postId;
                 const url = `{% url 'myneo4j:toggle_like' 0 %}`.replace('0', postId);
@@ -165,12 +181,19 @@
                         : likeIcon.dataset.unlikedSrc;
 
                     // 添加动画效果
-                    likeIcon.style.transform = 'scale(1.3)';
-                    setTimeout(() => {
-                        likeIcon.style.transform = this.classList.contains('liked')
-                            ? 'scale(1.2)'
-                            : 'scale(1)';
-                    }, 200);
+                    if (this.classList.contains('liked')) {
+                        likeIcon.classList.add('heartbeat');
+                        likeIcon.style.transform = 'scale(1.3)';
+                        setTimeout(() => {
+                            likeIcon.style.transform = 'scale(1)';
+                        }, 300);
+                    } else {
+                        likeIcon.classList.remove('heartbeat');
+                        likeIcon.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            likeIcon.style.transform = 'scale(1)';
+                        }, 300);
+                    }
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -178,52 +201,299 @@
                 });
             });
         }
+
+        // 为回复项添加悬停效果
+        const replyItems = document.querySelectorAll('.reply-item');
+        replyItems.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.style.transform = 'translateX(10px)';
+                item.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+            });
+
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'translateX(0)';
+                item.style.boxShadow = 'none';
+            });
+        });
     });
     </script>
 
     <style>
-        /* 自定义样式 */
-        html {
-            scroll-behavior: auto !important;
+        /* 全局样式 */
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #0d5bb8;
+            --secondary: #00bcd4;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --hover-shadow: 0 12px 40px rgba(26, 115, 232, 0.25);
+            --transition: all 0.3s ease;
         }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7f1 100%);
+            padding-bottom: 20px;
+        }
+
+        /* 医疗科技装饰元素 */
+        .medical-icons {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .medical-icons i {
+            position: absolute;
+            font-size: 12rem;
+            opacity: 0.03;
+            color: var(--primary);
+            z-index: -1;
+        }
+
+        .icon-1 { top: 10%; left: 5%; animation: float 18s infinite linear; }
+        .icon-2 { top: 25%; right: 5%; animation: float 22s infinite linear reverse; }
+        .icon-3 { bottom: 20%; left: 15%; animation: float 20s infinite linear; }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+
+        /* 按钮样式 */
+        .btn-gradient-back {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);
+            transition: var(--transition);
+        }
+
+        .btn-gradient-back:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(26, 115, 232, 0.4);
+        }
+
+        .btn-gradient-submit {
+            background: linear-gradient(90deg, #4caf50 0%, #8bc34a 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 10px 25px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            transition: var(--transition);
+        }
+
+        .btn-gradient-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        /* 卡片头部渐变 */
+        .gradient-header {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border: none;
+            border-radius: 12px 12px 0 0 !important;
+        }
+
+        .gradient-subheader {
+            background: linear-gradient(90deg, rgba(26, 115, 232, 0.9) 0%, rgba(0, 188, 212, 0.9) 100%);
+            border: none;
+            color: white;
+            border-radius: 12px 12px 0 0 !important;
+        }
+
+        /* 帖子详情卡片 */
+        .post-detail-card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            transition: var(--transition);
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .post-detail-card:hover {
+            box-shadow: var(--hover-shadow);
+        }
+
+        /* 头像样式 */
+        .avatar-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .avatar-circle-sm {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        /* 帖子内容样式 */
         .post-content {
             font-size: 1.1rem;
             line-height: 1.8;
+            color: #444;
+            padding: 15px;
+            background: rgba(248, 249, 250, 0.5);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
         }
-        .reply-item {
-            transition: all 0.3s;
-        }
-        .reply-item:hover {
-            background-color: #f8f9fa;
-            border-radius: 5px;
-        }
+
         /* 点赞按钮样式 */
         .like-btn {
             background: none;
             border: none;
-            padding: 0.25rem;
+            padding: 8px 15px;
             display: inline-flex;
             align-items: center;
-            transition: all 0.3s;
+            transition: var(--transition);
+            border-radius: 50px;
+            background: rgba(231, 76, 60, 0.1);
         }
+
         .like-btn:hover {
             transform: scale(1.1);
+            background: rgba(231, 76, 60, 0.2);
         }
+
         .like-icon {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             transition: all 0.3s;
         }
+
         .like-count {
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: #666;
+            font-weight: 500;
+            margin-left: 8px;
         }
+
         .liked .like-icon {
-            transform: scale(1.2);
+            animation: heartbeat 0.6s;
         }
-        /* 回复框聚焦样式 */
-        textarea:focus {
-            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.1) !important;
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* 回复表单卡片 */
+        .reply-form-card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+        }
+
+        .post-input {
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            padding: 0.75rem 1.25rem;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .post-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
+            outline: none;
+        }
+
+        /* 回复列表 */
+        .reply-item {
+            transition: var(--transition);
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+        }
+
+        .reply-item:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+
+        .reply-item:hover {
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 警告框 */
+        .alert-gradient {
+            background: linear-gradient(90deg, rgba(255, 193, 7, 0.9) 0%, rgba(255, 152, 0, 0.9) 100%);
+            color: #333;
+            border: none;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .avatar-circle {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .post-content {
+                font-size: 1rem;
+            }
+
+            .medical-icons i {
+                font-size: 8rem;
+            }
         }
     </style>
 </main>

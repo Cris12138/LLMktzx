@@ -13,12 +13,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 
-from .get_ali_response import GetAliResponse
-from .get_kimi_response import GetKimiResponse
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -31,9 +27,19 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# 媒体文件配置
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# 文件上传设置
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
+
+# 允许的图片格式
+ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/bmp']
+MAX_IMAGE_SIZE = 10 * 1024 * 1024  # 10MB
 
 # Application definition
-
 INSTALLED_APPS = [
     'simpleui',
     'django.contrib.admin',
@@ -58,7 +64,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'xy_neo4j.urls'
-#模板建立
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -79,27 +85,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'xy_neo4j.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-LLM_PROVIDERS = {#配置路由，
-    'kimi': 'KIMI',    # 对应 settings.KIMI.get_response()
-    'ali': 'ALI',      # 对应 settings.ALI.get_response()
-    'zhipu': 'ZHIPU',  # 对应 settings.ZHIPU.get_response()
-    'deepseek': 'DEEPSEEK'  # 对应 settings.DEEPSEEK.get_response()
+LLM_PROVIDERS = {
+    'kimi': 'KIMI',
+    'ali': 'ALI',
+    'zhipu': 'ZHIPU',
+    'deepseek': 'DEEPSEEK'
 }
-# 默认模型 (建议选择最稳定的)修改中.......
+
+# 默认模型 (建议选择最稳定的)
 DEFAULT_LLM = 'kimi'
 
-#数据库，这里选择SQLite
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',#当前base目录/db.sqlite文件
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
-
+# Password validation
+# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -116,27 +122,19 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 LANGUAGE_CODE = 'zh-hans'
-
 TIME_ZONE = 'Asia/Shanghai'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-#静态css和image资源项
+
 STATIC_URL = '/static/'
-
-
 STATIC_DIRS = (
     os.path.join(BASE_DIR, 'static')
 )
@@ -153,36 +151,80 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 DATAS_DIR = os.path.join(BASE_DIR, "datas")
 
-#API集成
-X_FRAME_OPTIONS = 'SAMEORIGIN'
+# API Keys
 ZHIPUAI_API_KEY = '9c62676e51d84d09955cc6ade617491d.4LKMlx2Zvk6849TV'
-DEEPSEEK_API_KEY = 'sk-97a2aab4b1d64834b4805c90b21933ef'
-DOUBAO_API_KEY='4cb99985-8f4d-4a3e-a300-c89620fab2ae'
-ANYUE_API_KEY='sk-Fj9mAA1l3SKLWAJZJLAQvCn0gFX7HlANQInZPCKH8PSQkndl'
-ALIBABA_API_KEY='sk-5bb14446a85842769d8cf237e08e8099'
+DEEPSEEK_API_KEY = 'sk-f77a1ecc09754fe3ac7c8a69108e13e8'
+DOUBAO_API_KEY = '4cb99985-8f4d-4a3e-a300-c89620fab2ae'
+ANYUE_API_KEY = 'sk-Fj9mAA1l3SKLWAJZJLAQvCn0gFX7HlANQInZPCKH8PSQkndl'
+ALIBABA_API_KEY = 'sk-90150b755c654c4d9765798ef995c540'
 
-# 新增：媒体文件配置，这里预设保存生成的内容
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-
+# SimpleUI 配置
 SIMPLEUI_HOME_INFO = False
 SIMPLEUI_ANALYSIS = False
 
+# 用户模型配置
 AUTH_USER_MODEL = 'accounts.UserProfile'
 LOGIN_URL = '/accounts/login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_URL = '/accounts/logout'
 
-#全员引用
+# 导入所有必需的模块 - 确保按正确顺序导入
 from .question_classifier import *
 from .question_parser import *
 from .answer_search import *
 from .get_zhipu_response import *
 from .get_deepseek_response import *
+from .get_ali_response import GetAliResponse
+from .get_kimi_response import GetKimiResponse
+from .get_ali_vision_response import GetAliVisionResponse  # 导入视觉模型
+
+# 实例化所有AI模型 - 关键修复：添加ALI_VISION实例化
 CLASSIFIER = QuestionClassifier()
 PARSER = QuestionPaser()
 SEACHER = AnswerSearcher()
 ZHIPU = GetZhipuResponse()
 DEEPSEEK = GetDeepSeekResponse()
-ALI=GetAliResponse()
-KIMI=GetKimiResponse()
+ALI = GetAliResponse()
+KIMI = GetKimiResponse()
+ALI_VISION = GetAliVisionResponse()  # 关键修复：实例化阿里云视觉模型
+# 在 settings.py 的末尾添加以下日志配置
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'debug.log'),
+            'formatter': 'verbose',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'myneo4j.views': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'myneo4j.get_ali_vision_response': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}

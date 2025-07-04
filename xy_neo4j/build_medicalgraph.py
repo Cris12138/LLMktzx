@@ -15,7 +15,7 @@ class MedicalGraph:
             host="127.0.0.1",  # neo4j 搭载服务器的ip地址，ifconfig可获取到
             # http_port=7474,  # neo4j 服务器监听的端口号
             user="neo4j",  # 数据库user name，如果没有更改过，应该是neo4j
-            password="5253812138")
+            password="gyd212115")
 
     '''读取文件'''
     def read_nodes(self):

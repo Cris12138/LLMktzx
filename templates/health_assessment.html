@@ -2,20 +2,29 @@
 {% load static %}
 
 {% block content %}
-<main class="lyear-layout-content">
+<main>
     <div class="container-fluid">
-        <div class="card shadow-lg border-0 rounded-lg">
-            <div class="card-header bg-gradient-primary text-white">
-                <h4 class="mb-0 d-flex align-items-center">
+        <div class="card shadow-lg border-0 rounded-lg animate__animated animate__fadeIn main-card">
+            <div class="card-header bg-gradient-primary text-white position-relative overflow-hidden enhanced-header">
+                <div class="tech-pattern"></div>
+                <h4 class="mb-0 d-flex align-items-center position-relative">
                     <i class="mdi mdi-heart-pulse mr-2 pulse-animation"></i>
                     个人健康状态智能测评系统
+                    <div class="tech-dots"></div>
                 </h4>
             </div>
-            <div class="card-body">
+            <div class="card-body enhanced-body">
                 <!-- 进度指示器 -->
                 <div class="assessment-progress mb-4">
-                    <div class="progress" style="height: 6px;">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width: 100%"></div>
+                    <div class="progress enhanced-progress" style="height: 8px;">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient-info enhanced-progress-bar" role="progressbar" style="width: 100%"></div>
+                    </div>
+                </div>
+
+                <div id="validation-error" class="alert alert-danger d-none shadow-sm animate__animated animate__headShake enhanced-alert">
+                    <div class="d-flex align-items-center">
+                        <i class="mdi mdi-alert-circle-outline mr-3 error-icon" style="font-size: 1.5rem;"></i>
+                        <span>请填写所有必填的健康数据项，然后再次提交。</span>
                     </div>
                 </div>
 
@@ -24,34 +33,37 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="card border-left-primary shadow h-100 py-2 mb-4">
+                            <div class="card enhanced-card border-left-primary shadow h-100 py-2 mb-4 hover-card">
                                 <div class="card-body">
-                                    <h5 class="text-primary mb-3"><i class="mdi mdi-account-details"></i> 基础身体数据</h5>
+                                    <h5 class="text-primary mb-3 section-title enhanced-section-title"><i class="mdi mdi-account-details"></i> 基础身体数据</h5>
                                     <div class="form-group">
-                                        <label for="height" class="font-weight-bold"><i class="mdi mdi-human-male-height"></i> 身高 (cm)</label>
-                                        <div class="input-group">
+                                        <label for="height" class="font-weight-bold enhanced-label"><i class="mdi mdi-human-male-height"></i> 身高 (cm)</label>
+                                        <div class="input-group input-group-glow enhanced-input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text bg-light"><i class="mdi mdi-ruler"></i></span>
+                                                <span class="input-group-text bg-light enhanced-input-prepend"><i class="mdi mdi-ruler"></i></span>
                                             </div>
-                                            <input type="number" class="form-control form-control-lg" id="height" name="height" min="100" max="250" placeholder="170" required>
+                                            <input type="number" class="form-control form-control-lg enhanced-input" id="height" name="height" min="100" max="250" placeholder="170" required>
+                                            <div class="input-line"></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="weight" class="font-weight-bold"><i class="mdi mdi-weight-kilogram"></i> 体重 (kg)</label>
-                                        <div class="input-group">
+                                        <label for="weight" class="font-weight-bold enhanced-label"><i class="mdi mdi-weight-kilogram"></i> 体重 (kg)</label>
+                                        <div class="input-group input-group-glow enhanced-input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text bg-light"><i class="mdi mdi-scale-bathroom"></i></span>
+                                                <span class="input-group-text bg-light enhanced-input-prepend"><i class="mdi mdi-scale-bathroom"></i></span>
                                             </div>
-                                            <input type="number" class="form-control form-control-lg" id="weight" name="weight" min="30" max="200" step="0.1" placeholder="65.0" required>
+                                            <input type="number" class="form-control form-control-lg enhanced-input" id="weight" name="weight" min="30" max="200" step="0.1" placeholder="65.0" required>
+                                            <div class="input-line"></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="age" class="font-weight-bold"><i class="mdi mdi-cake-variant"></i> 年龄</label>
-                                        <div class="input-group">
+                                        <label for="age" class="font-weight-bold enhanced-label"><i class="mdi mdi-cake-variant"></i> 年龄</label>
+                                        <div class="input-group input-group-glow enhanced-input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text bg-light"><i class="mdi mdi-calendar"></i></span>
+                                                <span class="input-group-text bg-light enhanced-input-prepend"><i class="mdi mdi-calendar"></i></span>
                                             </div>
-                                            <input type="number" class="form-control form-control-lg" id="age" name="age" min="1" max="120" placeholder="35" required>
+                                            <input type="number" class="form-control form-control-lg enhanced-input" id="age" name="age" min="1" max="120" placeholder="35" required>
+                                            <div class="input-line"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -59,38 +71,41 @@
                         </div>
 
                         <div class="col-md-6">
-                            <div class="card border-left-info shadow h-100 py-2 mb-4">
+                            <div class="card enhanced-card border-left-info shadow h-100 py-2 mb-4 hover-card">
                                 <div class="card-body">
-                                    <h5 class="text-info mb-3"><i class="mdi mdi-clipboard-pulse"></i> 生理健康指标</h5>
+                                    <h5 class="text-info mb-3 section-title enhanced-section-title"><i class="mdi mdi-clipboard-pulse"></i> 生理健康指标</h5>
                                     <div class="form-group">
-                                        <label for="blood-pressure" class="font-weight-bold"><i class="mdi mdi-heart-pulse"></i> 血压 (mmHg)</label>
-                                        <div class="input-group">
+                                        <label for="blood-pressure" class="font-weight-bold enhanced-label"><i class="mdi mdi-heart-pulse"></i> 血压 (mmHg)</label>
+                                        <div class="input-group input-group-glow enhanced-input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text bg-light"><i class="mdi mdi-gauge"></i></span>
+                                                <span class="input-group-text bg-light enhanced-input-prepend"><i class="mdi mdi-gauge"></i></span>
                                             </div>
-                                            <input type="text" class="form-control form-control-lg" id="blood-pressure" name="blood-pressure"
+                                            <input type="text" class="form-control form-control-lg enhanced-input" id="blood-pressure" name="blood-pressure"
                                                 placeholder="120/80" pattern="\d{1,3}/\d{1,3}" required>
+                                            <div class="input-line"></div>
                                         </div>
-                                        <small class="form-text text-muted">格式: 收缩压/舒张压</small>
+                                        <small class="form-text text-muted enhanced-help-text">格式: 收缩压/舒张压</small>
                                     </div>
                                     <div class="form-group">
-                                        <label for="blood-sugar" class="font-weight-bold"><i class="mdi mdi-blood-bag"></i> 血糖 (mmol/L)</label>
-                                        <div class="input-group">
+                                        <label for="blood-sugar" class="font-weight-bold enhanced-label"><i class="mdi mdi-blood-bag"></i> 血糖 (mmol/L)</label>
+                                        <div class="input-group input-group-glow enhanced-input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text bg-light"><i class="mdi mdi-chart-line-variant"></i></span>
+                                                <span class="input-group-text bg-light enhanced-input-prepend"><i class="mdi mdi-chart-line-variant"></i></span>
                                             </div>
-                                            <input type="number" class="form-control form-control-lg" id="blood-sugar" name="blood-sugar"
+                                            <input type="number" class="form-control form-control-lg enhanced-input" id="blood-sugar" name="blood-sugar"
                                                 min="2" max="30" step="0.1" placeholder="5.4" required>
+                                            <div class="input-line"></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="blood-lipid" class="font-weight-bold"><i class="mdi mdi-water"></i> 血脂 (mmol/L)</label>
-                                        <div class="input-group">
+                                        <label for="blood-lipid" class="font-weight-bold enhanced-label"><i class="mdi mdi-water"></i> 血脂 (mmol/L)</label>
+                                        <div class="input-group input-group-glow enhanced-input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text bg-light"><i class="mdi mdi-oil"></i></span>
+                                                <span class="input-group-text bg-light enhanced-input-prepend"><i class="mdi mdi-oil"></i></span>
                                             </div>
-                                            <input type="number" class="form-control form-control-lg" id="blood-lipid" name="blood-lipid"
+                                            <input type="number" class="form-control form-control-lg enhanced-input" id="blood-lipid" name="blood-lipid"
                                                 min="0.1" max="10" step="0.01" placeholder="4.25" required>
+                                            <div class="input-line"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -100,32 +115,42 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="card border-left-warning shadow h-100 py-2 mb-4">
+                            <div class="card enhanced-card border-left-warning shadow h-100 py-2 mb-4 hover-card">
                                 <div class="card-body">
-                                    <h5 class="text-warning mb-3"><i class="mdi mdi-alert-circle-outline"></i> 身体状况描述</h5>
+                                    <h5 class="text-warning mb-3 section-title enhanced-section-title"><i class="mdi mdi-alert-circle-outline"></i> 身体状况描述</h5>
                                     <div class="form-group">
-                                        <label for="sleep-status" class="font-weight-bold"><i class="mdi mdi-comment-text-outline"></i> 身体最近状况</label>
-                                        <textarea class="form-control form-control-lg" id="sleep-status" name="sleep-status"
-                                                rows="4" placeholder="请描述您最近的身体状况、不适症状以及您关注的健康问题..." required></textarea>
+                                        <label for="sleep-status" class="font-weight-bold enhanced-label"><i class="mdi mdi-comment-text-outline"></i> 身体最近状况</label>
+                                        <div class="textarea-container enhanced-textarea-container">
+                                            <textarea class="form-control form-control-lg enhanced-textarea" id="sleep-status" name="sleep-status"
+                                                    rows="4" placeholder="请描述您最近的身体状况、不适症状以及您关注的健康问题..." required></textarea>
+                                            <div class="textarea-line"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="card border-left-success shadow h-100 py-2 mb-4">
+                            <div class="card enhanced-card border-left-success shadow h-100 py-2 mb-4 hover-card">
                                 <div class="card-body">
-                                    <h5 class="text-success mb-3"><i class="mdi mdi-sleep"></i> 睡眠评估</h5>
+                                    <h5 class="text-success mb-3 section-title enhanced-section-title"><i class="mdi mdi-sleep"></i> 睡眠评估</h5>
                                     <div class="form-group">
-                                        <label for="sleep-quality" class="font-weight-bold"><i class="mdi mdi-moon-waning-crescent"></i> 睡眠质量</label>
-                                        <select class="form-control form-control-lg custom-select" id="sleep-quality" name="sleep-quality" required>
-                                            <option value="" disabled selected>请选择您的睡眠情况</option>
-                                            <option value="好">优质 - 入睡快，夜间不醒</option>
-                                            <option value="一般">一般 - 偶尔失眠</option>
-                                            <option value="差">较差 - 经常失眠或早醒</option>
+                                        <label for="sleep-quality" class="font-weight-bold enhanced-label"><i class="mdi mdi-moon-waning-crescent"></i> 睡眠质量</label>
+                                        <select class="form-control form-control-lg custom-select select-glow enhanced-select" id="sleep-quality" name="sleep-quality" required>
+                                            <option value="" disabled selected>💤 请选择您的睡眠情况</option>
+                                            <option value="好">😴 优质 - 入睡快，夜间不醒</option>
+                                            <option value="一般">😌 一般 - 偶尔失眠</option>
+                                            <option value="差">😔 较差 - 经常失眠或早醒</option>
                                         </select>
                                     </div>
-                                    <div class="sleep-animation mt-4 d-flex justify-content-center">
-                                        <i class="mdi mdi-weather-night text-primary" style="font-size: 3rem;"></i>
+                                    <div class="sleep-animation mt-4 d-flex justify-content-center enhanced-sleep-container">
+                                        <div class="sleep-icon-container">
+                                            <i class="mdi mdi-weather-night text-primary" style="font-size: 3rem;"></i>
+                                            <div class="sleep-stars">
+                                                <div class="star star1"></div>
+                                                <div class="star star2"></div>
+                                                <div class="star star3"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -133,7 +158,22 @@
                     </div>
 
                     <div class="text-center mt-4 mb-3">
-                        <button type="button" class="btn btn-primary btn-lg px-5 py-3 shadow-lg hover-scale" id="submit-btn">
+                        <!-- 新增评测类型选择下拉框 -->
+                        <div class="d-flex justify-content-center align-items-center mb-3 enhanced-radio-container">
+                            <div class="mr-3">
+                                <label for="evaluation-type" class="font-weight-bold enhanced-radio-label"><i class="mdi mdi-speedometer mr-1"></i>评测类型：</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline radio-glow enhanced-radio">
+                                <input type="radio" id="fast-evaluation" name="evaluation-type" class="custom-control-input" value="fast" checked>
+                                <label class="custom-control-label" for="fast-evaluation">极速评测</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline radio-glow enhanced-radio">
+                                <input type="radio" id="standard-evaluation" name="evaluation-type" class="custom-control-input" value="standard">
+                                <label class="custom-control-label" for="standard-evaluation">标准评测</label>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-primary btn-lg px-5 py-3 shadow-lg hover-scale pulse-btn enhanced-submit-btn" id="submit-btn">
                             <span id="submit-text"><i class="mdi mdi-database-check"></i> 提交并开始智能测评</span>
                             <span id="loading-spinner" class="spinner-border spinner-border-sm ml-2 d-none"></span>
                         </button>
@@ -141,46 +181,48 @@
                 </form>
 
                 <!-- 流式输出结果区域 -->
-                <div id="assessment-results" class="mt-5 d-none">
-                    <div class="card border-0 shadow-lg">
-                        <div class="card-header bg-gradient-success text-white">
-                            <h4 class="mb-0 d-flex align-items-center">
+                <div id="assessment-results" class="mt-5 d-none animate__animated animate__fadeIn">
+                    <div class="card border-0 shadow-lg result-card enhanced-result-card">
+                        <div class="card-header bg-gradient-success text-white position-relative overflow-hidden enhanced-result-header">
+                            <div class="tech-pattern-result"></div>
+                            <h4 class="mb-0 d-flex align-items-center position-relative">
                                 <i class="mdi mdi-clipboard-text mr-2 pulse-animation"></i>
                                 健康测评结果报告
+                                <div class="tech-dots-result"></div>
                             </h4>
                         </div>
-                        <div class="card-body">
-                            <div class="result-section mb-4">
+                        <div class="card-body enhanced-result-body">
+                            <div class="result-section mb-4 animate__animated animate__fadeInUp enhanced-result-section">
                                 <div class="d-flex align-items-center mb-3">
-                                    <div class="result-icon bg-info text-white rounded-circle p-2 mr-3">
+                                    <div class="result-icon bg-info text-white rounded-circle p-2 mr-3 icon-pulse enhanced-result-icon">
                                         <i class="mdi mdi-chart-line" style="font-size: 1.5rem;"></i>
                                     </div>
-                                    <h5 class="m-0 text-info">健康数据分析</h5>
+                                    <h5 class="m-0 text-info enhanced-result-title">健康数据分析</h5>
                                 </div>
-                                <div class="result-content bg-light p-4 rounded">
-                                    <pre class="mb-0">您的健康评估已完成</pre>
+                                <div class="result-content bg-light p-4 rounded enhanced-result-content">
+                                    <pre class="mb-0">您的健康数据已提交</pre>
                                 </div>
                             </div>
 
-                            <div class="result-section">
+                            <div class="result-section animate__animated animate__fadeInUp enhanced-result-section" style="animation-delay: 0.3s">
                                 <div class="d-flex align-items-center mb-3">
-                                    <div class="result-icon bg-warning text-white rounded-circle p-2 mr-3">
+                                    <div class="result-icon bg-warning text-white rounded-circle p-2 mr-3 icon-pulse enhanced-result-icon">
                                         <i class="mdi mdi-robot-industrial" style="font-size: 1.5rem;"></i>
                                     </div>
-                                    <h5 class="m-0 text-warning">AI智能健康建议</h5>
+                                    <h5 class="m-0 text-warning enhanced-result-title">AI智能健康建议</h5>
                                 </div>
-                                <div class="result-content bg-light p-4 rounded">
-                                    <div id="ai-suggestion-container" class="ai-suggestion">
-                                        <div id="ai-suggestion">分析中...</div>
+                                <div class="result-content bg-light p-4 rounded enhanced-result-content">
+                                    <div id="ai-suggestion-container" class="ai-suggestion enhanced-ai-suggestion">
+                                        <div id="ai-suggestion" class="typing-effect">分析中<span class="typing-dots"></span></div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div id="pdf-download-area" class="text-center mt-5 d-none">
-                                <button id="generate-pdf-btn" class="btn btn-info btn-lg mr-2 shadow hover-scale">
+                            <div id="pdf-download-area" class="text-center mt-5 d-none animate__animated animate__fadeInUp" style="animation-delay: 0.6s">
+                                <button id="generate-pdf-btn" class="btn btn-info btn-lg mr-2 shadow hover-scale glow-btn enhanced-pdf-btn">
                                     <i class="mdi mdi-file-pdf-box"></i> 生成报告 PDF
                                 </button>
-                                <a id="pdf-download-link" href="#" class="btn btn-success btn-lg shadow hover-scale d-none" download>
+                                <a id="pdf-download-link" href="#" class="btn btn-success btn-lg shadow hover-scale glow-btn enhanced-download-btn d-none" download>
                                     <i class="mdi mdi-download"></i> 下载完整健康报告 (PDF)
                                 </a>
                             </div>
@@ -189,9 +231,9 @@
                 </div>
 
                 {% if error %}
-                <div class="alert alert-danger mt-4 shadow-sm">
+                <div class="alert alert-danger mt-4 shadow-sm animate__animated animate__fadeIn enhanced-alert">
                     <div class="d-flex align-items-center">
-                        <i class="mdi mdi-alert-circle-outline mr-3" style="font-size: 1.5rem;"></i>
+                        <i class="mdi mdi-alert-circle-outline mr-3 error-icon" style="font-size: 1.5rem;"></i>
                         <span>错误: {{ error }}</span>
                     </div>
                 </div>
@@ -203,30 +245,818 @@
 
 <style>
 /* 基础样式 */
-.hover-scale {
-    transition: transform 0.2s;
+@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
+
+/* 主卡片增强样式 */
+.main-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 1px solid rgba(0, 123, 255, 0.1);
+    box-shadow: 0 15px 35px rgba(0, 123, 255, 0.1), 0 5px 15px rgba(0, 0, 0, 0.08) !important;
+    border-radius: 20px !important;
+    overflow: hidden;
+    position: relative;
 }
-.hover-scale:hover {
-    transform: scale(1.05);
+
+.main-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 123, 255, 0.02) 0%, rgba(40, 167, 69, 0.02) 50%, rgba(255, 193, 7, 0.02) 100%);
+    pointer-events: none;
+    z-index: 0;
 }
-.pulse-animation {
-    animation: pulse 2s infinite;
+
+.enhanced-header {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%) !important;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    padding: 20px 25px;
 }
-@keyframes pulse {
-    0% { opacity: 0.7; }
-    50% { opacity: 1; }
-    100% { opacity: 0.7; }
+
+.enhanced-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+    pointer-events: none;
 }
+
+.enhanced-body {
+    background: transparent;
+    padding: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+/* 增强的进度条 */
+.enhanced-progress {
+    background: linear-gradient(90deg, #e9ecef 0%, #f8f9fa 100%);
+    border-radius: 10px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+}
+
+.enhanced-progress::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.enhanced-progress-bar {
+    background: linear-gradient(90deg, #17a2b8 0%, #138496 50%, #117a8b 100%) !important;
+    box-shadow: 0 2px 8px rgba(23, 162, 184, 0.3);
+    position: relative;
+}
+
+/* 增强的卡片样式 */
+.enhanced-card {
+    background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 15px !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.enhanced-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--border-color, #007bff) 50%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.enhanced-card.border-left-primary::before {
+    --border-color: #007bff;
+}
+
+.enhanced-card.border-left-info::before {
+    --border-color: #17a2b8;
+}
+
+.enhanced-card.border-left-warning::before {
+    --border-color: #ffc107;
+}
+
+.enhanced-card.border-left-success::before {
+    --border-color: #28a745;
+}
+
+.enhanced-card:hover::before {
+    opacity: 1;
+}
+
+.enhanced-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 123, 255, 0.15), 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+    border-color: rgba(0, 123, 255, 0.2);
+}
+
+/* 增强的标题样式 */
+.enhanced-section-title {
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: inline-block;
+}
+
+.enhanced-section-title i {
+    background: linear-gradient(135deg, currentColor 0%, currentColor 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+/* 增强的表单标签 */
+.enhanced-label {
+    color: #495057;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.enhanced-label i {
+    color: #6c757d;
+    margin-right: 5px;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
+}
+
+/* 增强的输入框组 */
+.enhanced-input-group {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.enhanced-input-prepend .input-group-text {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 1px solid #dee2e6;
+    border-right: none;
+    color: #6c757d;
+    transition: all 0.3s ease;
+}
+
+.enhanced-input {
+    border: 1px solid #dee2e6;
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+    background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.enhanced-input:focus {
+    background: #ffffff;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.1), inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.enhanced-input:focus + .input-line {
+    background: linear-gradient(90deg, #007bff 0%, #0056b3 50%, #004085 100%);
+}
+
+/* 增强的文本域 */
+.enhanced-textarea-container {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.enhanced-textarea {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    resize: vertical;
+    min-height: 120px;
+}
+
+.enhanced-textarea:focus {
+    background: #ffffff;
+    border-color: #ffc107;
+    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.1), inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* 增强的选择框 */
+.enhanced-select {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+.enhanced-select:focus {
+    background: #ffffff;
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.1), inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* 增强的睡眠容器 */
+.enhanced-sleep-container {
+    background: radial-gradient(circle at center, rgba(0, 123, 255, 0.05) 0%, transparent 70%);
+    padding: 20px;
+    border-radius: 15px;
+    position: relative;
+}
+
+.enhanced-sleep-container::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(0, 123, 255, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse-bg 3s ease-in-out infinite;
+}
+
+@keyframes pulse-bg {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.1; }
+}
+
+/* 增强的单选按钮 */
+.enhanced-radio-container {
+    background: linear-gradient(135deg, rgba(0, 123, 255, 0.05) 0%, rgba(40, 167, 69, 0.05) 100%);
+    padding: 15px 25px;
+    border-radius: 15px;
+    border: 1px solid rgba(0, 123, 255, 0.1);
+}
+
+.enhanced-radio-label {
+    color: #495057;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.enhanced-radio .custom-control-label {
+    color: #6c757d;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.enhanced-radio .custom-control-input:checked ~ .custom-control-label {
+    color: #007bff;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 123, 255, 0.3);
+}
+
+.enhanced-radio .custom-control-label::before {
+    border: 2px solid #dee2e6;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    transition: all 0.3s ease;
+}
+
+.enhanced-radio .custom-control-input:checked ~ .custom-control-label::before {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.15);
+}
+
+/* 增强的提交按钮 */
+.enhanced-submit-btn {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #004085 100%);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3), 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.enhanced-submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+    transition: left 0.6s ease;
+}
+
+.enhanced-submit-btn:hover::before {
+    left: 100%;
+}
+
+.enhanced-submit-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 35px rgba(0, 123, 255, 0.4), 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* 增强的结果卡片 */
+.enhanced-result-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 20px !important;
+    overflow: hidden;
+    position: relative;
+}
+
+.enhanced-result-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.02) 0%, rgba(23, 162, 184, 0.02) 50%, rgba(255, 193, 7, 0.02) 100%);
+    pointer-events: none;
+}
+
+.enhanced-result-header {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 50%, #17a2b8 100%) !important;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+    padding: 20px 25px;
+}
+
+.enhanced-result-body {
+    padding: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.enhanced-result-section {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(248, 249, 250, 0.8) 100%);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.enhanced-result-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.enhanced-result-icon {
+    background: linear-gradient(135deg, var(--icon-color, #17a2b8) 0%, var(--icon-color-dark, #138496) 100%);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.enhanced-result-icon.bg-info {
+    --icon-color: #17a2b8;
+    --icon-color-dark: #138496;
+}
+
+.enhanced-result-icon.bg-warning {
+    --icon-color: #ffc107;
+    --icon-color-dark: #e0a800;
+}
+
+.enhanced-result-title {
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.enhanced-result-content {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* 增强的AI建议容器 */
+.enhanced-ai-suggestion {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+.enhanced-ai-suggestion::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #ffc107 0%, #fd7e14 50%, #dc3545 100%);
+    border-radius: 10px 10px 0 0;
+}
+
+/* 增强的PDF按钮 */
+.enhanced-pdf-btn {
+    background: linear-gradient(135deg, #17a2b8 0%, #138496 50%, #117a8b 100%);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(23, 162, 184, 0.3);
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.enhanced-pdf-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(23, 162, 184, 0.4);
+}
+
+.enhanced-download-btn {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 50%, #17a2b8 100%);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.enhanced-download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+}
+
+/* 增强的警告框 */
+.enhanced-alert {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    border: 1px solid #f5c6cb;
+    border-radius: 12px;
+    border-left: 4px solid #dc3545;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.15);
+}
+
+/* 增强的帮助文本 */
+.enhanced-help-text {
+    color: #6c757d;
+    font-size: 0.875rem;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+/* 科技感背景图案 */
+.tech-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 25%, transparent 25%,
+                transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%,
+                transparent 75%, transparent);
+    background-size: 20px 20px;
+    opacity: 0.3;
+    animation: move-bg 15s linear infinite;
+}
+
+.tech-pattern-result {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 25%, transparent 25%,
+                transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%,
+                transparent 75%, transparent);
+    background-size: 20px 20px;
+    opacity: 0.3;
+    animation: move-bg 15s linear infinite;
+}
+
+@keyframes move-bg {
+    0% { background-position: 0 0; }
+    100% { background-position: 40px 40px; }
+}
+
+/* 科技感点阵 */
+.tech-dots {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.tech-dots:before, .tech-dots:after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.7);
+    animation: pulse-dots 1.5s infinite alternate;
+}
+
+.tech-dots:after {
+    animation-delay: 0.5s;
+}
+
+.tech-dots-result {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.tech-dots-result:before, .tech-dots-result:after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.7);
+    animation: pulse-dots 1.5s infinite alternate;
+}
+
+.tech-dots-result:after {
+    animation-delay: 0.5s;
+}
+
+@keyframes pulse-dots {
+    0% { opacity: 0.4; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1.2); }
+}
+
+/* 卡片悬停效果 */
+.hover-card {
+    transition: all 0.3s ease;
+    border-left-width: 4px !important;
+}
+
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
+}
+
+/* 表单输入焦点效果 */
+.input-group-glow .form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    border-color: #80bdff;
+}
+
+.input-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #007bff, #00e5ff);
+    transition: width 0.3s ease;
+}
+
+.form-control:focus + .input-line {
+    width: 100%;
+}
+
+.textarea-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #ffc107, #ff9800);
+    transition: width 0.3s ease;
+}
+
+.textarea-container {
+    position: relative;
+}
+
+.textarea-container textarea:focus + .textarea-line {
+    width: 100%;
+}
+
+/* 睡眠图标动画增强 */
+.sleep-icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+.sleep-stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.star {
+    position: absolute;
+    background-color: #fff;
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle 2s infinite;
+}
+
+.star1 {
+    width: 4px;
+    height: 4px;
+    top: 10%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.star2 {
+    width: 3px;
+    height: 3px;
+    top: 30%;
+    left: 70%;
+    animation-delay: 0.5s;
+}
+
+.star3 {
+    width: 5px;
+    height: 5px;
+    top: 60%;
+    left: 40%;
+    animation-delay: 1s;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1.2); }
+    100% { opacity: 0; transform: scale(0.5); }
+}
+
 .sleep-animation {
     animation: float 3s ease-in-out infinite;
 }
+
 @keyframes float {
     0% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }
     100% { transform: translateY(0px); }
 }
 
-/* Markdown渲染样式 */
+/* 按钮动画效果 */
+.hover-scale {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+.pulse-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.pulse-btn:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+.pulse-btn:hover:after {
+    animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(20, 20);
+        opacity: 0;
+    }
+}
+
+.glow-btn {
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+.glow-btn:hover {
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.8);
+}
+
+/* 单选按钮样式 */
+.radio-glow .custom-control-input:checked ~ .custom-control-label::before {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); }
+    100% { box-shadow: 0 0 10px rgba(0, 123, 255, 0.8); }
+}
+
+/* 下拉框样式 */
+.select-glow:focus {
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    border-color: #28a745;
+}
+
+/* 结果卡片样式 */
+.result-card {
+    transition: all 0.5s ease;
+    transform-origin: top center;
+}
+
+.icon-pulse {
+    animation: icon-pulse 2s infinite;
+}
+
+@keyframes icon-pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* 错误图标动画 */
+.error-icon {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
+    40%, 60% { transform: translate3d(3px, 0, 0); }
+}
+
+/* 打字效果动画 */
+.typing-effect {
+    position: relative;
+}
+
+.typing-dots:after {
+    content: '';
+    animation: typing-dots 1.5s infinite;
+}
+
+@keyframes typing-dots {
+    0% { content: '.'; }
+    33% { content: '..'; }
+    66% { content: '...'; }
+    100% { content: ''; }
+}
+
+/* 章节标题动画 */
+.section-title {
+    position: relative;
+    display: inline-block;
+}
+
+.section-title:after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: width 0.5s ease;
+}
+
+.hover-card:hover .section-title:after {
+    width: 100%;
+}
+
+/* 脉冲动画 */
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+    100% { opacity: 0.7; transform: scale(1); }
+}
+
 /* Markdown渲染样式 */
 #ai-suggestion {
     line-height: 1.8;
@@ -236,6 +1066,7 @@
     background: #f8f9fa;
     border-radius: 8px;
     white-space: pre-wrap; /* 更改为pre-wrap以保留换行 */
+    transition: all 0.3s ease;
 }
 
 /* 标题样式 */
@@ -250,6 +1081,24 @@
     line-height: 1.4;
     color: #333;
     font-weight: 600;
+    position: relative;
+    padding-left: 10px;
+}
+
+#ai-suggestion h1:before,
+#ai-suggestion h2:before,
+#ai-suggestion h3:before,
+#ai-suggestion h4:before,
+#ai-suggestion h5:before,
+#ai-suggestion h6:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: linear-gradient(to bottom, #007bff, #00e5ff);
+    border-radius: 2px;
 }
 
 #ai-suggestion h1 { font-size: 1.8rem; border-bottom: 2px solid #eaecef; padding-bottom: 0.3rem; }
@@ -262,13 +1111,17 @@
 /* 确保段落间距 */
 #ai-suggestion p {
     margin-bottom: 1em;
+    transition: background-color 0.3s ease;
+}
+
+#ai-suggestion p:hover {
+    background-color: rgba(0, 123, 255, 0.05);
 }
 
 /* 强制段落换行 */
 #ai-suggestion p + p {
     margin-top: 1em;
 }
-
 
 /* 列表样式 */
 #ai-suggestion ul, #ai-suggestion ol {
@@ -278,6 +1131,21 @@
 
 #ai-suggestion li {
     margin-bottom: 0.5em;
+    position: relative;
+    transition: transform 0.2s ease;
+}
+
+#ai-suggestion li:hover {
+    transform: translateX(5px);
+}
+
+#ai-suggestion ul li:before {
+    content: '•';
+    color: #007bff;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
 }
 
 /* 表格样式 */
@@ -285,81 +1153,134 @@
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    overflow: hidden;
 }
 
 #ai-suggestion th, #ai-suggestion td {
     border: 1px solid #ddd;
-    padding: 0.5rem;
+    padding: 0.75rem;
     text-align: left;
+    transition: background-color 0.2s ease;
+}
+
+#ai-suggestion tr:hover td {
+    background-color: rgba(0, 123, 255, 0.05);
 }
 
 #ai-suggestion th {
-    background-color: #f2f2f2;
+    background: linear-gradient(135deg, #f2f2f2, #e6e6e6);
+    color: #333;
+    font-weight: 600;
 }
 
 /* 代码块样式 */
 #ai-suggestion pre {
-    background-color: #f0f0f0;
-    padding: 0.8rem;
-    border-radius: 4px;
+    background: linear-gradient(135deg, #f0f0f0, #e8e8e8);
+    padding: 1rem;
+    border-radius: 5px;
     overflow-x: auto;
     margin-bottom: 1em;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    border-left: 3px solid #007bff;
 }
 
 #ai-suggestion code {
-    font-family: monospace;
-    background-color: #f0f0f0;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: rgba(0,0,0,0.05);
     padding: 0.2rem 0.4rem;
     border-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+#ai-suggestion code:hover {
+    background-color: rgba(0,0,0,0.1);
 }
 
 /* 内联代码样式 */
 #ai-suggestion p code {
-    background-color: #f0f0f0;
+    background-color: rgba(0,0,0,0.05);
     padding: 0.2rem 0.4rem;
     border-radius: 3px;
-    font-family: monospace;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 /* 引用样式 */
 #ai-suggestion blockquote {
-    padding-left: 1rem;
-    border-left: 4px solid #ccc;
-    color: #666;
-    margin: 1rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid #007bff;
+    color: #555;
+    margin: 1.5rem 0;
+    background: linear-gradient(to right, rgba(0,123,255,0.05), transparent);
+    border-radius: 0 5px 5px 0;
+    position: relative;
+}
+
+#ai-suggestion blockquote:before {
+    content: '"';
+    font-size: 2rem;
+    color: rgba(0,123,255,0.2);
+    position: absolute;
+    left: 10px;
+    top: 0;
 }
 
 /* 水平线样式 */
 #ai-suggestion hr {
-    height: 0.25em;
+    height: 3px;
     padding: 0;
     margin: 24px 0;
-    background-color: #e1e4e8;
+    background: linear-gradient(to right, #007bff, transparent);
     border: 0;
+    border-radius: 3px;
 }
 
 /* 强调文本 */
 #ai-suggestion strong {
     font-weight: 600;
+    color: #0056b3;
 }
 
 #ai-suggestion em {
     font-style: italic;
+    color: #6610f2;
+}
+
+/* 打字效果动画 */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: #333; }
+}
+
+.typing-animation {
+    overflow: hidden;
+    border-right: .15em solid #333; /* 光标效果 */
+    white-space: nowrap;
+    animation:
+        typing 3s steps(40, end),
+        blink-caret .75s step-end infinite;
+    display: inline-block;
 }
 </style>
 
 <!-- 添加必要的JavaScript库 -->
 <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.5/purify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
 <script>
 // 全局变量存储完整的AI建议文本
-// 全局变量存储未处理的内容和完整建议
-// 全局变量存储完整的AI建议文本和状态
 let completeAiSuggestion = '';
 let healthData = {};
 let isStreamComplete = false;
 let streamBuffer = '';
+let evaluationType = 'fast'; // 默认评测类型为极速评测
 
 // 配置marked选项
 marked.setOptions({
@@ -371,9 +1292,56 @@ marked.setOptions({
     smartypants: true     // 使用更智能的标点符号
 });
 
+// 打字效果渲染函数 - 更平滑的打字效果
+function renderTypingEffect(element, text, speed = 20) {
+    return new Promise((resolve) => {
+        element.innerHTML = ''; // 清空内容
+        let i = 0;
+        let tempContent = '';
+        let lastRenderTime = 0;
+        const renderInterval = 100; // 每100ms更新一次DOM
+
+        function typeWriter(timestamp) {
+            // 控制渲染频率，避免频繁DOM更新
+            if (!lastRenderTime || timestamp - lastRenderTime >= renderInterval) {
+                // 一次添加多个字符，提高效率
+                const charsToAdd = Math.min(5, text.length - i);
+                for (let j = 0; j < charsToAdd; j++) {
+                    tempContent += text.charAt(i + j);
+                }
+                i += charsToAdd;
+
+                // 使用marked解析Markdown
+                const htmlContent = marked.parse(tempContent);
+                const cleanHtml = DOMPurify.sanitize(htmlContent);
+
+                element.innerHTML = cleanHtml;
+
+                // 自动滚动到底部，带有平滑效果
+                const container = element.parentElement;
+                container.scrollTo({
+                    top: container.scrollHeight,
+                    behavior: 'smooth'
+                });
+
+                lastRenderTime = timestamp;
+            }
+
+            if (i < text.length) {
+                requestAnimationFrame(typeWriter);
+            } else {
+                resolve();
+            }
+        }
+
+        requestAnimationFrame(typeWriter);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('health-assessment-form');
     const submitBtn = document.getElementById('submit-btn');
+    const validationError = document.getElementById('validation-error');
     const loadingSpinner = document.getElementById('loading-spinner');
     const submitText = document.getElementById('submit-text');
     const assessmentResults = document.getElementById('assessment-results');
@@ -383,17 +1351,91 @@ document.addEventListener('DOMContentLoaded', function() {
     const generatePdfBtn = document.getElementById('generate-pdf-btn');
     const pdfDownloadLink = document.getElementById('pdf-download-link');
 
+    // 获取评测类型选择器
+    const fastEvaluation = document.getElementById('fast-evaluation');
+    const standardEvaluation = document.getElementById('standard-evaluation');
+
+    // 添加表单输入动画效果
+    animateFormFields();
+
+    // 监听评测类型变化
+    fastEvaluation.addEventListener('change', function() {
+        if (this.checked) {
+            evaluationType = 'fast';
+            anime({
+                targets: this.parentElement,
+                scale: [1, 1.1, 1],
+                duration: 600,
+                easing: 'easeOutElastic(1, .8)'
+            });
+        }
+    });
+
+    standardEvaluation.addEventListener('change', function() {
+        if (this.checked) {
+            evaluationType = 'standard';
+            anime({
+                targets: this.parentElement,
+                scale: [1, 1.1, 1],
+                duration: 600,
+                easing: 'easeOutElastic(1, .8)'
+            });
+        }
+    });
+
     // 提交表单处理
     submitBtn.addEventListener('click', function() {
         // 表单验证
+        validationError.classList.add('d-none');
+
         if (form.checkValidity() === false) {
             form.classList.add('was-validated');
+
+            // 显示全局错误提示
+            validationError.classList.remove('d-none');
+
+            // 添加抖动动画
+            anime({
+                targets: validationError,
+                translateX: [0, -10, 10, -10, 10, 0],
+                duration: 600,
+                easing: 'easeInOutSine'
+            });
+
+            // 滚动到第一个无效字段
+            const firstInvalid = form.querySelector(':invalid');
+            if (firstInvalid) {
+                firstInvalid.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+                firstInvalid.focus();
+
+                // 添加高亮动画
+                anime({
+                    targets: firstInvalid,
+                    boxShadow: [
+                        '0 0 0 rgba(220, 53, 69, 0)',
+                        '0 0 10px rgba(220, 53, 69, 0.7)',
+                        '0 0 0 rgba(220, 53, 69, 0)'
+                    ],
+                    duration: 1500,
+                    easing: 'easeOutQuad'
+                });
+            }
+
             return;
         }
 
+        // 重置PDF下载区域
+        pdfDownloadArea.classList.add('d-none');
+        pdfDownloadLink.classList.add('d-none');
+        generatePdfBtn.classList.remove('d-none');
+        generatePdfBtn.disabled = false;
+        generatePdfBtn.innerHTML = '<i class="mdi mdi-file-pdf-box"></i> 生成报告 PDF';
+
         // 收集表单数据
         const formData = new FormData(form);
-
         // 存储健康数据供后续使用
         healthData = {
             'height': formData.get('height'),
@@ -411,11 +1453,18 @@ document.addEventListener('DOMContentLoaded', function() {
         submitText.classList.add('d-none');
         loadingSpinner.classList.remove('d-none');
 
-        // 显示结果区域
+        // 显示结果区域并添加动画
         assessmentResults.classList.remove('d-none');
+        anime({
+            targets: assessmentResults,
+            opacity: [0, 1],
+            translateY: [20, 0],
+            duration: 800,
+            easing: 'easeOutQuad'
+        });
 
         // 重置AI建议内容
-        aiSuggestionElement.innerHTML = '';
+        aiSuggestionElement.innerHTML = '<div class="typing-effect">分析中<span class="typing-dots"></span></div>';
         completeAiSuggestion = '';
         streamBuffer = '';
         isStreamComplete = false;
@@ -423,11 +1472,67 @@ document.addEventListener('DOMContentLoaded', function() {
         // 获取CSRF令牌
         const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-        // 构建请求URL
+        // 构建请求URL - 添加评测类型参数
         const url = new URL(window.location.href);
-        url.searchParams.set('stream', 'true');
+        url.searchParams.set('evaluation_type', evaluationType);
+        url.searchParams.set('stream', evaluationType === 'fast' ? 'true' : 'false');
 
-        // 创建请求对象
+        // 如果是标准评测，使用fetch API获取完整响应
+        if (evaluationType === 'standard') {
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': csrfToken
+                },
+                body: new URLSearchParams(healthData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('网络响应异常');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // 恢复按钮状态
+                submitBtn.disabled = false;
+                submitText.classList.remove('d-none');
+                loadingSpinner.classList.add('d-none');
+
+                if (data.model_suggestion) {
+                    // 保存完整的AI建议
+                    completeAiSuggestion = data.model_suggestion;
+                    // 使用打字效果渲染Markdown内容
+                    renderTypingEffect(aiSuggestionElement, data.model_suggestion)
+                        .then(() => {
+                            // 显示PDF生成按钮并添加动画
+                            pdfDownloadArea.classList.remove('d-none');
+                            anime({
+                                targets: pdfDownloadArea,
+                                opacity: [0, 1],
+                                translateY: [20, 0],
+                                duration: 800,
+                                easing: 'easeOutQuad'
+                            });
+
+                            // 自动生成PDF
+                            generatePDF(healthData, completeAiSuggestion);
+                        });
+                } else {
+                    aiSuggestionElement.innerHTML = '<p class="text-danger">未能获取评测结果</p>';
+                }
+            })
+            .catch(error => {
+                console.error('标准评测请求错误:', error);
+                aiSuggestionElement.innerHTML = `<p class="text-danger">请求失败: ${error.message}</p>`;
+                // 恢复按钮状态
+                submitBtn.disabled = false;
+                submitText.classList.remove('d-none');
+                loadingSpinner.classList.add('d-none');
+            });
+            return;
+        }
+
         const xhr = new XMLHttpRequest();
         xhr.open('POST', url, true);
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -438,7 +1543,6 @@ document.addEventListener('DOMContentLoaded', function() {
         xhr.onprogress = function() {
             const newData = xhr.responseText.substring(streamBuffer.length);
             streamBuffer = xhr.responseText;
-
             // 解析SSE格式数据
             const lines = newData.split('\n\n');
             lines.forEach(line => {
@@ -452,17 +1556,25 @@ document.addEventListener('DOMContentLoaded', function() {
         xhr.onload = function() {
             // 标记流式传输完成
             isStreamComplete = true;
-
             // 最终处理一次完整内容
             finalizeContent();
-
             // 恢复按钮状态
             submitBtn.disabled = false;
             submitText.classList.remove('d-none');
             loadingSpinner.classList.add('d-none');
 
-            // 显示PDF生成按钮
+            // 显示PDF生成按钮并添加动画
             pdfDownloadArea.classList.remove('d-none');
+            anime({
+                targets: pdfDownloadArea,
+                opacity: [0, 1],
+                translateY: [20, 0],
+                duration: 800,
+                easing: 'easeOutQuad'
+            });
+
+            // 自动生成PDF
+            generatePDF(healthData, completeAiSuggestion);
         };
 
         xhr.onerror = function(error) {
@@ -475,6 +1587,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 发送请求
         xhr.send(formData);
+    });
+
+    const inputs = form.querySelectorAll('input, select, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('input', function() {
+            if (form.checkValidity()) {
+                validationError.classList.add('d-none');
+            }
+        });
     });
 
     // 处理流式内容 - 直接显示原始内容
@@ -508,6 +1629,16 @@ document.addEventListener('DOMContentLoaded', function() {
             // 更新DOM
             aiSuggestionElement.innerHTML = cleanHtml;
 
+            // 添加内容出现动画
+            anime({
+                targets: '#ai-suggestion h1, #ai-suggestion h2, #ai-suggestion h3, #ai-suggestion p, #ai-suggestion ul, #ai-suggestion ol',
+                opacity: [0, 1],
+                translateX: [10, 0],
+                delay: anime.stagger(100),
+                duration: 800,
+                easing: 'easeOutQuad'
+            });
+
             // 自动滚动到底部
             aiSuggestionContainer.scrollTop = aiSuggestionContainer.scrollHeight;
         } catch (error) {
@@ -535,21 +1666,55 @@ document.addEventListener('DOMContentLoaded', function() {
         return processed;
     }
 
-    // PDF生成按钮处理
-    generatePdfBtn.addEventListener('click', function() {
-        this.disabled = true;
-        this.innerHTML = '<i class="mdi mdi-loading mdi-spin"></i> 生成中...';
+    // 表单字段动画效果
+    function animateFormFields() {
+        // 输入框焦点效果
+        const formControls = document.querySelectorAll('.form-control');
+        formControls.forEach(control => {
+            control.addEventListener('focus', function() {
+                const card = this.closest('.card');
+                if (card) {
+                    anime({
+                        targets: card,
+                        boxShadow: [
+                            '0 .5rem 1rem rgba(0,0,0,.15)',
+                            '0 .5rem 2rem rgba(0,123,255,.25)',
+                            '0 .5rem 1rem rgba(0,0,0,.15)'
+                        ],
+                        duration: 1000,
+                        easing: 'easeOutElastic(1, .8)'
+                    });
+                }
+            });
+        });
 
-        // 创建一个表单提交
+        // 卡片初始化动画
+        const cards = document.querySelectorAll('.card');
+        anime({
+            targets: cards,
+            opacity: [0, 1],
+            translateY: [20, 0],
+            delay: anime.stagger(100),
+            duration: 800,
+            easing: 'easeOutQuad'
+        });
+    }
+
+    // 生成PDF函数
+    function generatePDF(healthData, suggestion) {
+        // 创建表单数据
         const formData = new FormData();
         formData.append('health_data', JSON.stringify(healthData));
-        formData.append('model_suggestion', completeAiSuggestion);
+        formData.append('model_suggestion', suggestion);
 
-        // 发送请求生成PDF
+        // 添加CSRF令牌
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        // 发送请求
         fetch('{% url "myneo4j:generate-health-report-pdf" %}', {
             method: 'POST',
             headers: {
-                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                'X-CSRFToken': csrfToken,
                 'X-Requested-With': 'XMLHttpRequest'
             },
             body: formData
@@ -558,47 +1723,89 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if (data.success) {
                 // 更新下载链接
-                pdfDownloadLink.href = data.pdf_url;
+                pdfDownloadLink.href = data.pdf_url + '?t=' + new Date().getTime(); // 添加时间戳防止缓存
                 pdfDownloadLink.classList.remove('d-none');
                 generatePdfBtn.classList.add('d-none');
+
+                // 添加下载链接的动画效果
+                anime({
+                    targets: pdfDownloadLink,
+                    scale: [0.9, 1],
+                    opacity: [0, 1],
+                    duration: 600,
+                    easing: 'easeOutElastic(1, .8)'
+                });
             } else {
-                alert('PDF生成失败: ' + data.error);
+                alert('生成失败: ' + (data.error || '未知错误'));
                 generatePdfBtn.disabled = false;
                 generatePdfBtn.innerHTML = '<i class="mdi mdi-file-pdf-box"></i> 重试生成报告';
             }
         })
         .catch(error => {
             console.error('PDF生成错误:', error);
-            alert('PDF生成出错，请重试');
+            alert('生成出错: ' + error.message);
             generatePdfBtn.disabled = false;
             generatePdfBtn.innerHTML = '<i class="mdi mdi-file-pdf-box"></i> 重试生成报告';
         });
-    });
+    }
 
     // 血压输入验证
     document.getElementById('blood-pressure').addEventListener('input', function(e) {
         if (!/^\d{0,3}\/?\d{0,3}$/.test(e.target.value)) {
             e.target.setCustomValidity('请输入正确的血压格式，如120/80');
+
+            // 添加错误提示动画
+            anime({
+                targets: e.target,
+                borderColor: ['#dc3545', '#ced4da'],
+                duration: 1000,
+                easing: 'easeOutQuad'
+            });
         } else {
             e.target.setCustomValidity('');
         }
     });
 
-    // 睡眠质量选择时更改图标颜色
+    // 睡眠质量选择时更改图标颜色和动画
     document.getElementById('sleep-quality').addEventListener('change', function() {
         const sleepIcon = document.querySelector('.sleep-animation i');
+        const sleepStars = document.querySelector('.sleep-stars');
+
         switch(this.value) {
             case '好':
                 sleepIcon.className = 'mdi mdi-sleep text-success';
+                sleepStars.style.display = 'block';
+                anime({
+                    targets: sleepIcon,
+                    rotate: [0, 10, 0],
+                    scale: [1, 1.2, 1],
+                    duration: 1000,
+                    easing: 'easeOutElastic(1, .8)'
+                });
                 break;
             case '一般':
                 sleepIcon.className = 'mdi mdi-sleep text-warning';
+                sleepStars.style.display = 'block';
+                anime({
+                    targets: sleepIcon,
+                    translateX: [0, 5, 0],
+                    duration: 800,
+                    easing: 'easeOutQuad'
+                });
                 break;
             case '差':
                 sleepIcon.className = 'mdi mdi-sleep-off text-danger';
+                sleepStars.style.display = 'none';
+                anime({
+                    targets: sleepIcon,
+                    translateX: [0, -5, 5, -5, 5, 0],
+                    duration: 800,
+                    easing: 'easeOutQuad'
+                });
                 break;
             default:
                 sleepIcon.className = 'mdi mdi-weather-night text-primary';
+                sleepStars.style.display = 'block';
         }
     });
 
@@ -617,10 +1824,53 @@ document.addEventListener('DOMContentLoaded', function() {
         if(height && weight) {
             const heightInMeters = height / 100;
             const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(1);
+
             // 可以用于未来功能扩展，如实时显示BMI
+            // 添加数据输入动画
+            anime({
+                targets: '#height, #weight',
+                backgroundColor: [
+                    'rgba(0, 123, 255, 0.1)',
+                    'rgba(255, 255, 255, 1)'
+                ],
+                duration: 800,
+                easing: 'easeOutQuad'
+            });
         }
     }
-});
 
+    // 生成PDF按钮事件
+    generatePdfBtn.addEventListener('click', function() {
+        // 检查是否完成
+        if (evaluationType === 'fast' && !isStreamComplete) {
+            alert('请等待评测完成后再生成PDF');
+            return;
+        }
+
+        this.disabled = true;
+        this.innerHTML = '<i class="mdi mdi-loading mdi-spin"></i> 生成中...';
+
+        // 添加加载动画
+        anime({
+            targets: this,
+            scale: [1, 0.95, 1],
+            duration: 600,
+            easing: 'easeOutQuad'
+        });
+
+        // 确保使用完整的AI建议内容
+        const suggestionContent = completeAiSuggestion || aiSuggestionElement.textContent;
+
+        if (!suggestionContent || suggestionContent.trim() === '分析中...') {
+            alert('AI分析内容尚未准备好');
+            this.disabled = false;
+            this.innerHTML = '<i class="mdi mdi-file-pdf-box"></i> 生成报告 PDF';
+            return;
+        }
+
+        // 调用PDF生成函数
+        generatePDF(healthData, suggestionContent);
+    });
+});
 </script>
 {% endblock %}

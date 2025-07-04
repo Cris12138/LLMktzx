@@ -4,6 +4,7 @@ from . import settings
 class GetZhipuResponse:
     def __init__(self):
         self.client = ZhipuAI(api_key=settings.ZHIPUAI_API_KEY)
+
     def get_response(self, prompt):
         response = self.client.chat.completions.create(
             model="glm-4",
